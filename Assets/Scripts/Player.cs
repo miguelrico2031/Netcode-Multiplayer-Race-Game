@@ -1,7 +1,9 @@
+using Cinemachine;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     // Player Info
     public string Name { get; set; }
@@ -17,8 +19,17 @@ public class Player : MonoBehaviour
         return Name;
     }
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
-        GameManager.Instance.currentRace.AddPlayer(this);
+        if(IsServer) GameManager.Instance.currentRace.AddPlayer(this);
+        if (IsOwner)
+        {
+            InputSystem.Instance.SetPlayer(this);
+            var vcam = FindObjectOfType<CinemachineVirtualCamera>();
+            vcam.Follow = car.transform;
+            vcam.LookAt = car.transform;
+        }
+        
+        base.OnNetworkSpawn();
     }
 }

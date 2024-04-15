@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class CarController : MonoBehaviour
+public class CarController : NetworkBehaviour
 {
     #region Variables
 
@@ -27,6 +28,10 @@ public class CarController : MonoBehaviour
     private float _steerHelper = 0.8f;
 
 
+    
+    
+    
+    private const float EPS_SQ = float.Epsilon * float.Epsilon;
     private float _currentSpeed = 0;
 
     private float Speed
@@ -34,10 +39,10 @@ public class CarController : MonoBehaviour
         get => _currentSpeed;
         set
         {
-            if (Math.Abs(_currentSpeed - value) < float.Epsilon) return;
+            // if (Math.Abs(_currentSpeed - value) < float.Epsilon) return;
+            if (Math.Pow(_currentSpeed - value, 2) < EPS_SQ) return;
             _currentSpeed = value;
-            if (OnSpeedChangeEvent != null)
-                OnSpeedChangeEvent(_currentSpeed);
+            OnSpeedChangeEvent?.Invoke(_currentSpeed);
         }
     }
 
@@ -61,6 +66,9 @@ public class CarController : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (!IsSpawned || !IsServer) return;
+        
+        
         InputSteering = Mathf.Clamp(InputSteering, -1, 1);
         InputAcceleration = Mathf.Clamp(InputAcceleration, -1, 1);
         InputBrake = Mathf.Clamp(InputBrake, 0, 1);
@@ -165,7 +173,7 @@ public class CarController : MonoBehaviour
 
 // finds the corresponding visual wheel
 // correctly applies the transform
-    public void ApplyLocalPositionToVisuals(WheelCollider col)
+    private void ApplyLocalPositionToVisuals(WheelCollider col)
     {
         if (col.transform.childCount == 0)
         {
@@ -173,9 +181,8 @@ public class CarController : MonoBehaviour
         }
 
         Transform visualWheel = col.transform.GetChild(0);
-        Vector3 position;
-        Quaternion rotation;
-        col.GetWorldPose(out position, out rotation);
+
+        col.GetWorldPose(out var position, out var rotation);
         var myTransform = visualWheel.transform;
         myTransform.position = position;
         myTransform.rotation = rotation;

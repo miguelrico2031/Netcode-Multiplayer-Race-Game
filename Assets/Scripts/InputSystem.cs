@@ -1,56 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 public class InputSystem : MonoBehaviour
 {
     public static InputSystem Instance { get; private set; }
-    [SerializeField] private Player player;
+    private Player _player;
+    
+    
+    private InputAction _move, _brake, _attack;
 
-    public Player Player
-    {
-        get => player;
-        set
-        {
-            player = value;
-            SetPlayer(player);
-        }
-    }
-
-    public InputAction Move;
-    public InputAction Brake;
-    public InputAction Attack;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            if(_player) SetPlayer(_player);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        if (player)
-        {
-            SetPlayer(player);
-        }
+        else Destroy(gameObject);
     }
 
-    private void SetPlayer(Player player)
+
+
+    public void SetPlayer(Player player)
     {
-        InputController input = player.GetComponent<InputController>();
-
-        Move.performed += input.OnMove;
-        Move.Enable();
-
-        Brake.performed += input.OnBrake;
-        Brake.Enable();
-
-        Attack.performed += input.OnBrake;
-        Attack.Enable();
+        _player = player;
+        var input = _player.GetComponent<InputController>();
+        var playerInput = FindObjectOfType<PlayerInput>();
+        
+        _move = playerInput.actions["Move"];
+        _move.performed += input.OnMove;
+        _move.Enable();
+        
+        _brake = playerInput.actions["Brake"];
+        _brake.performed += input.OnBrake;
+        _brake.Enable();
+        
+        _attack = playerInput.actions["Attack"];
+        _attack.performed += input.OnAttack;
+        _attack.Enable();
     }
 }

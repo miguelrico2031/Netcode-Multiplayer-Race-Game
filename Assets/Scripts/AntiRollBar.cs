@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AntiRollBar : MonoBehaviour
 {
-
+    
+    
     public WheelCollider wheelLeft, wheelRight;
     private Rigidbody carRigidbody;
 
@@ -19,11 +20,10 @@ public class AntiRollBar : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        WheelHit hit = new WheelHit();
         float travelL = 1.0f;
         float travelR = 1.0f;
 
-        bool groundedL = wheelLeft.GetGroundHit(out hit);
+        bool groundedL = wheelLeft.GetGroundHit(out var hit);
 
         if (groundedL)
         {

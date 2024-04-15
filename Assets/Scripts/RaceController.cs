@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class RaceController : MonoBehaviour
+public class RaceController : NetworkBehaviour
 {
+    [SerializeField] private bool _showDebugSpheres;
+    
     public int numPlayers;
 
     private readonly List<Player> _players = new(4);
@@ -13,6 +16,8 @@ public class RaceController : MonoBehaviour
     {
         if (_circuitController == null) _circuitController = GetComponent<CircuitController>();
 
+        if(!_showDebugSpheres) return;
+        
         _debuggingSpheres = new GameObject[GameManager.Instance.numPlayers];
         for (int i = 0; i < GameManager.Instance.numPlayers; ++i)
         {
@@ -23,8 +28,7 @@ public class RaceController : MonoBehaviour
 
     private void Update()
     {
-        if (_players.Count == 0)
-            return;
+        if (!IsServer || _players.Count == 0) return;
 
         UpdateRaceProgress();
     }
@@ -32,6 +36,7 @@ public class RaceController : MonoBehaviour
     public void AddPlayer(Player player)
     {
         _players.Add(player);
+        player.car.transform.position = _circuitController.GetPoint(0);
     }
 
     private class PlayerInfoComparer : Comparer<Player>
@@ -63,13 +68,13 @@ public class RaceController : MonoBehaviour
 
         _players.Sort(new PlayerInfoComparer(arcLengths));
 
-        string myRaceOrder = "";
-        foreach (var player in _players)
-        {
-            myRaceOrder += player.Name + " ";
-        }
-
-        Debug.Log("Race order: " + myRaceOrder);
+        // string myRaceOrder = "";
+        // foreach (var player in _players)
+        // {
+        //     myRaceOrder += player.Name + " ";
+        // }
+        //
+        // Debug.Log("Race order: " + myRaceOrder);
     }
 
     float ComputeCarArcLength(int id)
@@ -83,18 +88,23 @@ public class RaceController : MonoBehaviour
         float minArcL =
             this._circuitController.ComputeClosestPointArcLength(carPos, out _, out var carProj, out _);
 
-        this._debuggingSpheres[id].transform.position = carProj;
+        if(_showDebugSpheres) this._debuggingSpheres[id].transform.position = carProj;
 
-        if (this._players[id].CurrentLap == 0)
-        {
-            minArcL -= _circuitController.CircuitLength;
-        }
-        else
-        {
-            minArcL += _circuitController.CircuitLength *
-                       (_players[id].CurrentLap - 1);
-        }
-
+        
+        // Esto no lo entiendo, si está en la 0 creo que debería dejarlo como esta
+        
+        // if (this._players[id].CurrentLap == 0)
+        // {
+        //     minArcL -= _circuitController.CircuitLength;
+        // }
+        // else
+        // {
+        //     minArcL += _circuitController.CircuitLength *
+        //                (_players[id].CurrentLap - 1);
+        // }
+        
+        minArcL += _circuitController.CircuitLength * _players[id].CurrentLap;
+        
         return minArcL;
     }
 }
