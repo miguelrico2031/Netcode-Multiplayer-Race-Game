@@ -35,6 +35,7 @@ public class InputSystem : MonoBehaviour
         
         _move = playerInput.actions["Move"];
         _move.performed += input.OnMove;
+        _move.canceled += input.OnMove;
         _move.Enable();
         
         _brake = playerInput.actions["Brake"];
