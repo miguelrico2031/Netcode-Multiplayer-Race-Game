@@ -28,7 +28,7 @@ public class RaceController : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsServer || _players.Count == 0) return;
+        if (!IsSpawned || !IsServer || _players.Count == 0) return;
 
         UpdateRaceProgress();
     }

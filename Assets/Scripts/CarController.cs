@@ -124,6 +124,8 @@ public class CarController : NetworkBehaviour
         SpeedLimiter();
         AddDownForce();
         TractionControl();
+        
+        // if(steering != 0) Debug.Break();
     }
 
     #endregion
@@ -207,7 +209,7 @@ public class CarController : NetworkBehaviour
         {
             var turnAdjust = (transform.eulerAngles.y - CurrentRotation) * _steerHelper;
             Quaternion velRotation = Quaternion.AngleAxis(turnAdjust, Vector3.up);
-            _rigidbody.velocity = velRotation * _rigidbody.velocity;
+            _rigidbody.velocity = velRotation * _rigidbody.velocity;    
         }
 
         CurrentRotation = transform.eulerAngles.y;
