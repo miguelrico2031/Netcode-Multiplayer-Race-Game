@@ -18,8 +18,8 @@ public class RaceController : NetworkBehaviour
 
         if(!_showDebugSpheres) return;
         
-        _debuggingSpheres = new GameObject[GameManager.Instance.numPlayers];
-        for (int i = 0; i < GameManager.Instance.numPlayers; ++i)
+        _debuggingSpheres = new GameObject[GameManager.Instance.NumPlayers];
+        for (int i = 0; i < GameManager.Instance.NumPlayers; ++i)
         {
             _debuggingSpheres[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             _debuggingSpheres[i].GetComponent<SphereCollider>().enabled = false;

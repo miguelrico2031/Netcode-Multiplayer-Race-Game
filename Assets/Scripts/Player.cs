@@ -21,7 +21,7 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if(IsServer) GameManager.Instance.currentRace.AddPlayer(this);
+        if(IsServer) GameManager.Instance.CurrentRace.AddPlayer(this);
         if (IsOwner)
         {
             InputSystem.Instance.SetPlayer(this);
