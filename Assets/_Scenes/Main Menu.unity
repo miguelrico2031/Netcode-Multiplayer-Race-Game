@@ -2081,18 +2081,6 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2516914120
       objectReference: {fileID: 0}
-    - target: {fileID: 223773773262848095, guid: f38c86e633ccb694b8f8e82952eaf4f8, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 1224647905
-      objectReference: {fileID: 0}
-    - target: {fileID: 2713525277961629494, guid: f38c86e633ccb694b8f8e82952eaf4f8, type: 3}
-      propertyPath: _playerPrefab
-      value: 
-      objectReference: {fileID: 1407186896210306908, guid: 8cb0f194315f5874797b12dac7f6cdfb, type: 3}
-    - target: {fileID: 2713525277961629494, guid: f38c86e633ccb694b8f8e82952eaf4f8, type: 3}
-      propertyPath: _playerInfoPrefab
-      value: 
-      objectReference: {fileID: 5924612681164001115, guid: c12100aa7cf960e4d9169151f476c11f, type: 3}
     - target: {fileID: 3728537196008222728, guid: f38c86e633ccb694b8f8e82952eaf4f8, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -2849,8 +2837,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3490,15 +3478,20 @@ MonoBehaviour:
   _hostBtn: {fileID: 1217440885}
   _joinBtn: {fileID: 1898309362}
   _startBtn: {fileID: 1047023644}
+  _carSelectLeftBtn: {fileID: 1030870537}
+  _carSelectRightBtn: {fileID: 2050463516}
   _circuitSelect: {fileID: 429309409}
   _joinInput: {fileID: 1641092519}
   _nameInput: {fileID: 1380632552}
   _playersLog: {fileID: 684289563}
   _carRenderer: {fileID: 1417409301}
   _carColors:
-  - {fileID: 2100000, guid: b0d3a5b71d0804a428ab23c894e06d94, type: 2}
-  - {fileID: 2100000, guid: f80a9236ab426af4b8d2c6462e2eb2d2, type: 2}
-  - {fileID: 2100000, guid: b12fe7ead2b8aee4f8a30a7c3ecff424, type: 2}
+  - Color: 0
+    Material: {fileID: 2100000, guid: b12fe7ead2b8aee4f8a30a7c3ecff424, type: 2}
+  - Color: 1
+    Material: {fileID: 2100000, guid: b0d3a5b71d0804a428ab23c894e06d94, type: 2}
+  - Color: 2
+    Material: {fileID: 2100000, guid: f80a9236ab426af4b8d2c6462e2eb2d2, type: 2}
 --- !u!1 &1945187929
 GameObject:
   m_ObjectHideFlags: 0

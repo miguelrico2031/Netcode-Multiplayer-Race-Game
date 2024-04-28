@@ -17,19 +17,15 @@ using UnityEngine.Events;
 
 public class GameManager : NetworkBehaviour
 {
+    [field:SerializeField] public int MaxConnections { get; private set; }
     public static GameManager Instance { get; private set; }
     public RaceController CurrentRace { get; private set; }
-    // public int MaxConnections { get => _maxConnections; }
 
-
-    public NetworkList<FixedString64Bytes> PlayerNames;
-    public NetworkList<ulong> PlayerIDs;
     [HideInInspector] public NetworkVariable<int> NumPlayers;
-    [HideInInspector] public NetworkVariable<FixedString64Bytes> HostName;
-    [HideInInspector] public NetworkVariable<ulong> HostID;
+    public NetworkVariable<PlayerInfo> HostInfo;
+    public NetworkList<PlayerInfo> PlayerInfos;
     
     [SerializeField] private Player _playerPrefab;
-    [SerializeField] private int _maxConnections;
 
     private NetworkManager _networkManager;
     private MainMenuUI _mainMenuUI;
@@ -37,56 +33,53 @@ public class GameManager : NetworkBehaviour
 
     
 
-    void Awake()
+    private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+        
 
-        //_playerInfos = new();
         NumPlayers = new NetworkVariable<int>();
         NumPlayers.Value = 0;
-        HostName = new NetworkVariable<FixedString64Bytes>();
-        PlayerNames = new NetworkList<FixedString64Bytes>();
-        PlayerIDs = new NetworkList<ulong>();
-        HostID = new();
+        PlayerInfos = new();
+        HostInfo = new();
     }
 
     private void Start()
     {
         _networkManager = NetworkManager.Singleton;
-        if(_networkManager != null) _networkManager.OnClientConnectedCallback += OnClientConnected;
+        _networkManager.OnClientConnectedCallback += OnClientConnected;
         _mainMenuUI = FindObjectOfType<MainMenuUI>();
     }
 
-    public override void OnDestroy()
+    private void OnDisable()
     {
         _networkManager.OnClientConnectedCallback -= OnClientConnected;
-        
-        base.OnDestroy();
     }
 
 
-
-
-    public async void StartHost(Action<string> callback)
+    public async void StartHost(Action<string> sucessCallback, Action failCallback)
     {
         await UnityServices.InitializeAsync();
         if (!AuthenticationService.Instance.IsSignedIn)
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
-        Allocation allocation = await RelayService.Instance.CreateAllocationAsync(_maxConnections);
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
-        var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-        NetworkManager.Singleton.StartHost();
 
-        callback(joinCode);
+        try //intenta crear un host
+        {
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(MaxConnections);
+            _networkManager.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
+            var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            _networkManager.StartHost();
+
+            sucessCallback(joinCode); //llama al callback
+        }
+        catch(Exception e) // si falla llama al callback de error
+        {
+            Debug.LogError(e);
+            failCallback();
+        }
     }
 
     public async void StartClient(string joinCode, Action successCallback, Action failCallback)
@@ -97,52 +90,49 @@ public class GameManager : NetworkBehaviour
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
 
-        try
+        try //intenta unirse a la sala con el joinCode
         {
             var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
-            NetworkManager.Singleton.GetComponent<UnityTransport>()
+            _networkManager.GetComponent<UnityTransport>()
                 .SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
 
-            NetworkManager.Singleton.StartClient();
-            successCallback();
+            _networkManager.StartClient();
+            successCallback(); //callback cuando termina
         }
-        catch (Exception e)
+        catch (Exception e) //callback de fallo si falla
         {
             Debug.LogError(e);
             failCallback();
         }
     }
 
-    public override void OnNetworkSpawn()
+    
+    public override void OnNetworkSpawn() 
     {
-        var playerName = new FixedString64Bytes(_mainMenuUI.PlayerName); 
+        //se obtienen los datos del jugador que se haya unido / haya creado la sala
         var id = _networkManager.LocalClientId;
+        var playerName = new FixedString64Bytes(_mainMenuUI.PlayerName);
+        var playerColor = _mainMenuUI.PlayerColor;
         
-        if (IsHost)
+        if (IsHost)  //si es el host guardamos su info duplicada en la variable HostInfo
         {
-            HostName.Value = playerName;
-            HostID.Value = id;
+            HostInfo.Value = new PlayerInfo(id, playerName, playerColor);
         }
         
-        AddPlayerServerRpc(playerName, id);
-        _mainMenuUI.OnPlayersUpdated();
-        PlayerNames.OnListChanged += _mainMenuUI.OnPlayersUpdated;
+        AddPlayerInfoServerRpc(id, playerName, playerColor); //Llamada al server para actualizar la lista de PlayerInfos
         
-
+        base.OnNetworkSpawn();
     }
     
+    
+    private void OnClientConnected(ulong id) { }
+    
 
-
-    private void OnClientConnected(ulong id)
-    {
-
-    }
-
+    
     [ServerRpc(RequireOwnership = false)]
-    private void AddPlayerServerRpc(FixedString64Bytes playerName, ulong id)
+    private void AddPlayerInfoServerRpc(ulong id, FixedString64Bytes playerName, PlayerInfo.PlayerColor playerColor)
     {
-        PlayerNames.Add(playerName);
-        PlayerIDs.Add(id);
+        PlayerInfos.Add(new PlayerInfo(id, playerName, playerColor));
         NumPlayers.Value++;
     }
 }
