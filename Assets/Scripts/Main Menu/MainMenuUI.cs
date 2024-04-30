@@ -7,6 +7,7 @@ using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class MainMenuUI : MonoBehaviour
     public Circuit SelectedCircuit { get; private set; }
 
     [SerializeField] private TextMeshProUGUI _joinCodeText, _nameText, _playersLogText;
-    [SerializeField] private Button _hostBtn, _joinBtn, _startBtn, _carSelectLeftBtn, _carSelectRightBtn;
+    [SerializeField] private Button _hostBtn, _joinBtn, _startBtn, _carSelectLeftBtn, _carSelectRightBtn, _backButton;
     [SerializeField] private GameObject _circuitSelect, _joinInput, _nameInput, _playersLog;
     [SerializeField] private MeshRenderer _carRenderer;
     
@@ -32,12 +33,18 @@ public class MainMenuUI : MonoBehaviour
     private int _colorIdx = 0;
     private Material[] _carMaterials;
 
+    private int _circuitIdx = 0;
+    private TextMeshProUGUI _circuitText;
+    
     private void Start()
     {
         _carMaterials = _carRenderer.materials;
         _carMaterials[1] = _carColors[_colorIdx].Material;
         _carRenderer.materials = _carMaterials;
         PlayerColor = _carColors[_colorIdx].Color;
+        SelectedCircuit = (Circuit)Enum.GetValues(typeof(Circuit)).GetValue(0);
+        _circuitText = _circuitSelect.GetComponent<TextMeshProUGUI>();
+        _circuitText.text = SelectedCircuit.ToString();
 
         GameManager.Instance.PlayerInfos.OnListChanged += OnPlayersUpdated;
 
@@ -57,6 +64,15 @@ public class MainMenuUI : MonoBehaviour
         PlayerColor = _carColors[_colorIdx].Color;
 
     }
+    
+    public void ChangeCircuit(bool right) //metodo llamado por los botones de cambiar el color del coche
+    {
+        _circuitIdx = (_circuitIdx + (right ? 1 : -1)) % Enum.GetValues(typeof(Circuit)).Length;
+        _circuitIdx = _circuitIdx < 0 ? Enum.GetValues(typeof(Circuit)).Length - 1 : _circuitIdx;
+        SelectedCircuit = (Circuit)Enum.GetValues(typeof(Circuit)).GetValue(_circuitIdx);
+        _circuitText.text = SelectedCircuit.ToString();
+    }
+
 
     //metodo llamado por el input de elegir nombre
     public void SetName(string newName) => PlayerName = newName;
@@ -142,6 +158,11 @@ public class MainMenuUI : MonoBehaviour
             if (PlayerName == playerInfo.Name) _playersLogText.text += " (YOU)";
             _playersLogText.text += "\n";
         }
+    }
+
+    private void HomeMenu()
+    {
+        
     }
 
 }
