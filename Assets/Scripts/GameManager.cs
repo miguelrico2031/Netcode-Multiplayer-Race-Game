@@ -24,6 +24,7 @@ public class GameManager : NetworkBehaviour
     [HideInInspector] public NetworkVariable<int> NumPlayers;
     public NetworkVariable<PlayerInfo> HostInfo;
     public NetworkList<PlayerInfo> PlayerInfos;
+    public NetworkVariable<Circuit> SelectedCircuit;
     
     [SerializeField] private Player _playerPrefab;
 
@@ -43,6 +44,7 @@ public class GameManager : NetworkBehaviour
         NumPlayers.Value = 0;
         PlayerInfos = new();
         HostInfo = new();
+        SelectedCircuit = new();
     }
 
     private void Start()
@@ -117,6 +119,7 @@ public class GameManager : NetworkBehaviour
         if (IsHost)  //si es el host guardamos su info duplicada en la variable HostInfo
         {
             HostInfo.Value = new PlayerInfo(id, playerName, playerColor);
+            SelectedCircuit.Value = _mainMenuUI.SelectedCircuit;
         }
         
         AddPlayerInfoServerRpc(id, playerName, playerColor); //Llamada al server para actualizar la lista de PlayerInfos

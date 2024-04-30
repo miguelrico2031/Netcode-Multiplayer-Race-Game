@@ -12,6 +12,7 @@ public class MainMenuUI : MonoBehaviour
 {
     public string PlayerName { get; private set; } = "Anon";
     public PlayerInfo.PlayerColor PlayerColor { get; private set; }
+    public Circuit SelectedCircuit { get; private set; }
 
     [SerializeField] private TextMeshProUGUI _joinCodeText, _nameText, _playersLogText;
     [SerializeField] private Button _hostBtn, _joinBtn, _startBtn, _carSelectLeftBtn, _carSelectRightBtn;
