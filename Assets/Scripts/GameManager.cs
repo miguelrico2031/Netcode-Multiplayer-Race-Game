@@ -31,6 +31,7 @@ public class GameManager : NetworkBehaviour
     private NetworkManager _networkManager;
     private MainMenuUI _mainMenuUI;
 
+    private bool _disconnectedLocally = false;
 
     
 
@@ -51,12 +52,14 @@ public class GameManager : NetworkBehaviour
     {
         _networkManager = NetworkManager.Singleton;
         _networkManager.OnClientConnectedCallback += OnClientConnected;
+        _networkManager.OnServerStopped += OnServerStopped;
+        _networkManager.OnClientStopped += OnClientStopped;
         _mainMenuUI = FindObjectOfType<MainMenuUI>();
     }
 
     private void OnDisable()
     {
-        _networkManager.OnClientConnectedCallback -= OnClientConnected;
+
     }
 
 
@@ -120,7 +123,7 @@ public class GameManager : NetworkBehaviour
         {
             HostInfo.Value = new PlayerInfo(id, playerName, playerColor);
             SelectedCircuit.Value = _mainMenuUI.SelectedCircuit;
-            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+            _networkManager.OnClientDisconnectCallback += OnClientDisconnected;
         }
         
         AddPlayerInfoServerRpc(id, playerName, playerColor); //Llamada al server para actualizar la lista de PlayerInfos
@@ -134,11 +137,39 @@ public class GameManager : NetworkBehaviour
     private void OnClientDisconnected(ulong id)
     {
         Debug.Log(id + "Desconectado");
+        NumPlayers.Value--;
+        int i;
+        for (i = 0; i < PlayerInfos.Count; i++)
+            if (PlayerInfos[i].ID == id) break;
+        PlayerInfos.RemoveAt(i);
+        
+    }
+
+    private void OnServerStopped(bool b) //se llama local en el host cuando se para el servber
+    {
+        Debug.Log($"stopeado servero y el bool es {b}");
+        ReturnToMainMenu();
+    }
+    
+    private void OnClientStopped(bool b) //se llama en el cliente local solo (no en host) cuando se desconecta
+    {
+        Debug.Log($"stopeado cliento y el bool es {b}");
+        if (_disconnectedLocally) ReturnToMainMenu();
+        else _mainMenuUI.ShowErrorPanel(ReturnToMainMenu);
+    }
+
+    private void ReturnToMainMenu()
+    {
+        _networkManager.OnClientConnectedCallback -= OnClientConnected;
+        _networkManager.OnServerStopped -= OnServerStopped;
+        _networkManager.OnClientStopped -= OnClientStopped;
+        SceneManager.LoadScene(0);
     }
 
     public void Disconnect()
     {
-        NetworkManager.Singleton.Shutdown();
+        _disconnectedLocally = true;
+        _networkManager.Shutdown();
     }
     
     [ServerRpc(RequireOwnership = false)]

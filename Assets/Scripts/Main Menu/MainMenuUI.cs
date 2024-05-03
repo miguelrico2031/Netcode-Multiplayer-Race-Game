@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -31,9 +31,15 @@ public class MainMenuUI : MonoBehaviour
     private int _circuitIdx = 0;
     private Array _circuits = Enum.GetValues(typeof(Circuit));
     private TextMeshProUGUI _circuitText;
-    
+    private Button _errorPanelButton;
+
+
+
     private void Start()
     {
+        
+        _errorPanelButton = _errorPanel.GetComponentInChildren<Button>(true);
+        _errorPanelButton.onClick.AddListener(BackToHomeMenu);
         _hostBtnOriginalPos = _hostBtn.GetComponent<RectTransform>().position;
 
         InitializePlayerModel();
@@ -202,16 +208,22 @@ public class MainMenuUI : MonoBehaviour
         DisableSecondaryMenuUI();
     }
 
-    private static void DisconnectHostButton()
+    public void ShowErrorPanel(UnityAction onBtnClick)
     {
-        GameManager.Instance.Disconnect();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        _errorPanel.SetActive(true);
+        _errorPanelButton.onClick.RemoveAllListeners();
+        _errorPanelButton.onClick.AddListener(onBtnClick);
+
     }
 
-    private static void DisconnectClientButton()
+    private void DisconnectHostButton()
     {
         GameManager.Instance.Disconnect();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void DisconnectClientButton()
+    {
+        GameManager.Instance.Disconnect();
     }
 
     private void RestoreMainMenuUI()
