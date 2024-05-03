@@ -202,16 +202,16 @@ public class MainMenuUI : MonoBehaviour
         DisableSecondaryMenuUI();
     }
 
-    private void DisconnectHostButton()
+    private static void DisconnectHostButton()
     {
-        // logica para quitar el host
-        BackToHomeMenu();                                                                   // Restaura la UI a su estado original.
+        GameManager.Instance.Disconnect();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void DisconnectClientButton()
+    private static void DisconnectClientButton()
     {
-        //  logica para quitar el cliente
-        BackToHomeMenu();                                                                   // Restaura la UI a su estado original.                     
+        GameManager.Instance.Disconnect();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void RestoreMainMenuUI()

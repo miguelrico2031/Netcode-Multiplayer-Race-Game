@@ -120,6 +120,7 @@ public class GameManager : NetworkBehaviour
         {
             HostInfo.Value = new PlayerInfo(id, playerName, playerColor);
             SelectedCircuit.Value = _mainMenuUI.SelectedCircuit;
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
         }
         
         AddPlayerInfoServerRpc(id, playerName, playerColor); //Llamada al server para actualizar la lista de PlayerInfos
@@ -129,8 +130,16 @@ public class GameManager : NetworkBehaviour
     
     
     private void OnClientConnected(ulong id) { }
-    
 
+    private void OnClientDisconnected(ulong id)
+    {
+        Debug.Log(id + "Desconectado");
+    }
+
+    public void Disconnect()
+    {
+        NetworkManager.Singleton.Shutdown();
+    }
     
     [ServerRpc(RequireOwnership = false)]
     private void AddPlayerInfoServerRpc(ulong id, FixedString64Bytes playerName, PlayerInfo.PlayerColor playerColor)
