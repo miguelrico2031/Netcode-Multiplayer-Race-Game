@@ -33,13 +33,19 @@ public class GameManager : NetworkBehaviour
 
     private bool _disconnectedLocally = false;
 
+    private HashSet<ulong> _readyPlayers = new();
     
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-        
+
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         NumPlayers = new NetworkVariable<int>();
         NumPlayers.Value = 0;
@@ -54,6 +60,7 @@ public class GameManager : NetworkBehaviour
         _networkManager.OnClientConnectedCallback += OnClientConnected;
         _networkManager.OnServerStopped += OnServerStopped;
         _networkManager.OnClientStopped += OnClientStopped;
+        _networkManager.ConnectionApprovalCallback += ApprovalCheck;
         _mainMenuUI = FindObjectOfType<MainMenuUI>();
     }
 
@@ -110,6 +117,11 @@ public class GameManager : NetworkBehaviour
             failCallback();
         }
     }
+    
+    private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
+    {
+        response.Approved = SceneManager.GetActiveScene().buildIndex == 0;
+    }
 
     
     public override void OnNetworkSpawn() 
@@ -142,7 +154,7 @@ public class GameManager : NetworkBehaviour
         for (i = 0; i < PlayerInfos.Count; i++)
             if (PlayerInfos[i].ID == id) break;
         PlayerInfos.RemoveAt(i);
-        
+        _readyPlayers.Remove(id);
     }
 
     private void OnServerStopped(bool b) //se llama local en el host cuando se para el servber
@@ -151,7 +163,7 @@ public class GameManager : NetworkBehaviour
         ReturnToMainMenu();
     }
     
-    private void OnClientStopped(bool b) //se llama en el cliente local solo (no en host) cuando se desconecta
+    private void OnClientStopped(bool b) //se llama en el cliente local solo cuando se desconecta
     {
         Debug.Log($"stopeado cliento y el bool es {b}");
         if (_disconnectedLocally) ReturnToMainMenu();
@@ -171,11 +183,23 @@ public class GameManager : NetworkBehaviour
         _disconnectedLocally = true;
         _networkManager.Shutdown();
     }
+
+    private void LoadGameScene()
+    {
+        _networkManager.SceneManager.LoadScene("Game", LoadSceneMode.Single);
+    }
     
     [ServerRpc(RequireOwnership = false)]
     private void AddPlayerInfoServerRpc(ulong id, FixedString64Bytes playerName, PlayerInfo.PlayerColor playerColor)
     {
-        PlayerInfos.Add(new PlayerInfo(id, playerName, playerColor));
         NumPlayers.Value++;
+        PlayerInfos.Add(new PlayerInfo(id, playerName, playerColor));
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetPlayerReadyServerRpc(ulong id)
+    {
+        _readyPlayers.Add(id);
+        if (NumPlayers.Value > 1 && _readyPlayers.Count > NumPlayers.Value / 2f) LoadGameScene();
     }
 }

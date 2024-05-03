@@ -119,6 +119,11 @@ public class MainMenuUI : MonoBehaviour
         }
     }
 
+    public void SetPlayerReady()
+    {
+        GameManager.Instance.SetPlayerReadyServerRpc(NetworkManager.Singleton.LocalClientId);
+    }
+
     private void LoadCircuitSelectScreen()
     {
         _joinBtn.gameObject.SetActive(false);
@@ -140,7 +145,6 @@ public class MainMenuUI : MonoBehaviour
         {
             _joinCodeText.text = joinCode;                                                  //muestra el codigo de la sala por pantalla
             _joinCodeText.gameObject.SetActive(true);
-            _startBtn.gameObject.SetActive(true);
             _playersLog.SetActive(true);
         },
         () =>
@@ -165,6 +169,7 @@ public class MainMenuUI : MonoBehaviour
         _joinInput.SetActive(false);
         _backBtn.onClick.RemoveAllListeners();
         _backBtn.onClick.AddListener(DisconnectClientButton);
+        
         GameManager.Instance.StartClient(_joinCode,
         () =>
         {                                                                                   //cuando se una a la sala se muestran los jugadores que hay
@@ -191,13 +196,19 @@ public class MainMenuUI : MonoBehaviour
     }
 
     private void OnPlayersUpdated(NetworkListEvent<PlayerInfo> e = default)
-    {                                                                                       //actualiza el texto del log de jugadores, indicando quien eres tu y quien es el host
+    {
+        _startBtn.gameObject.SetActive(GameManager.Instance.NumPlayers.Value >= 2);
+        UpdatePlayerLogText();
+    }
+    
+    private void UpdatePlayerLogText() //actualiza el texto del log de jugadores, indicando quien eres tu y quien es el host
+    {
         _playersLogText.text = "";
         foreach (PlayerInfo playerInfo in GameManager.Instance.PlayerInfos)
         {
             _playersLogText.text += playerInfo.Name.Value;
-            if (GameManager.Instance.HostInfo.Value.Equals(playerInfo)) _playersLogText.color = Color.yellow;
-            if (PlayerName == playerInfo.Name) _playersLogText.text += "[YOU]";
+            // if (GameManager.Instance.HostInfo.Value.Equals(playerInfo)) _playersLogText.color = Color.yellow;
+            if (PlayerName == playerInfo.Name) _playersLogText.text += " [YOU]";
             _playersLogText.text += "\n";
         }
     }
