@@ -1,22 +1,38 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CircuitController : MonoBehaviour
 {
+    public float TotalLength { get; private set; }
+    public Checkpoint[] Checkpoints { get; private set; }
+    
+    
     private LineRenderer _circuitPath;
     private Vector3[] _pathPos;
     private float[] _cumArcLength;
-    private float _totalLength;
+    private Transform[] _startPositions;
+    
 
-    public float CircuitLength
+    private void Awake()
     {
-        get { return _totalLength; }
+        _circuitPath = GetComponent<LineRenderer>();
+        _circuitPath.enabled = false;
+        _startPositions = transform.Find("StartPos").GetComponentsInChildren<Transform>();
+
+        var cParent = transform.Find("Checkpoints");
+        Checkpoints = new Checkpoint[cParent.childCount];
+        for (int i = 0; i < Checkpoints.Length; i++)
+        {
+            Checkpoints[i] = cParent.GetChild(i).GetComponent<Checkpoint>();
+            Checkpoints[i].Index = i;
+        }
+        
+        InitCircuitPath();
     }
 
-    private void Start()
+    private void InitCircuitPath()
     {
-        _circuitPath = GetComponentInChildren<LineRenderer>();
-        
-        
         //obtiene en el array pathpos todos los puntos del linerenderer
         //y en el array cumArcLength todas las longitudes desde el punto 0 hasta el punto i
         //por tanto en la ultima posicion guarda la longitud total del linerenderer
@@ -34,15 +50,17 @@ public class CircuitController : MonoBehaviour
             _cumArcLength[i] = _cumArcLength[i - 1] + length;
         }
 
-        _totalLength = _cumArcLength[_cumArcLength.Length - 1];
+        TotalLength = _cumArcLength[_cumArcLength.Length - 1];
     }
 
-    public Vector3 GetSegment(int idx)
+    private Vector3 GetSegment(int idx)
     {
         return _pathPos[idx + 1] - _pathPos[idx];
     }
 
     public Vector3 GetPoint(int idx) => _pathPos[idx];
+
+    public Vector3 GetStartPos(int idx) => _startPositions[idx + 1].position;
 
     public float ComputeClosestPointArcLength(Vector3 posIn, out int segIdx, out Vector3 posProjOut, out float distOut)
     {

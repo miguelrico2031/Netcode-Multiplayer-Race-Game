@@ -1,51 +1,123 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RaceController : NetworkBehaviour
 {
-    [SerializeField] private bool _showDebugSpheres;
+    public event Action RaceStarted; //variable del host solo (de momento)
+    public NetworkVariable<int> RaceCountdown;
+    public CircuitController CircuitController { get; private set; }
     
-    public int numPlayers;
-
-    private readonly List<Player> _players = new(4);
-    private CircuitController _circuitController;
-    private GameObject[] _debuggingSpheres;
-
-    private void Start()
+    [Serializable]
+    public struct CircuitAndPrefab
     {
-        if (_circuitController == null) _circuitController = GetComponent<CircuitController>();
+        public Circuit Circuit;
+        public CircuitController Prefab;
+    }
+    
+    [SerializeField] private CircuitAndPrefab[] _circuits;
+    [SerializeField] private bool _showDebugSpheres; 
+    
+    private readonly List<Player> _players = new(); //solo host de momento
+    private GameObject[] _debuggingSpheres; // a saber donde esto creo host
 
-        if(!_showDebugSpheres) return;
+    private Coroutine StartRaceCor = null;
 
-        int nPlayers = GameManager.Instance.NumPlayers.Value;
+    private float[] _arcLengths;
+    
+    #region Callbacks
+
+    private void Awake()
+    {
+        RaceCountdown = new();
+        GameManager.Instance.RaceController = this;
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        SpawnCircuit();
         
+        if(_showDebugSpheres) InitDebugSpheres();
+
+        GameManager.Instance.SpawnPlayer();
+        
+        base.OnNetworkSpawn();
+    }
+
+    private void Update()
+    {
+        if (!IsSpawned || !IsHost) return;
+
+        UpdateRaceProgress();
+    }
+    
+    #endregion
+    
+    
+    #region Initialization
+    
+    private void SpawnCircuit()
+    {
+        var circuit = GameManager.Instance.SelectedCircuit.Value;
+        var prefab = _circuits[0].Prefab;
+        foreach (var c in _circuits)
+        {
+            if (c.Circuit != circuit) continue;
+            prefab = c.Prefab;
+        }
+        CircuitController = Instantiate(prefab, prefab.transform.position, Quaternion.identity, transform);
+
+    }
+
+    private void InitDebugSpheres()
+    {
+        int nPlayers = GameManager.Instance.NumPlayers.Value;
         _debuggingSpheres = new GameObject[nPlayers];
         for (int i = 0; i < nPlayers; ++i)
         {
             _debuggingSpheres[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             _debuggingSpheres[i].GetComponent<SphereCollider>().enabled = false;
         }
+
+        CircuitController.GetComponent<LineRenderer>().enabled = true;
     }
+    
+    
+    #endregion
 
-    private void Update()
-    {
-        if (!IsSpawned || !IsServer || _players.Count == 0) return;
-
-        UpdateRaceProgress();
-    }
-
-    public void AddPlayer(Player player)
+    
+    
+    
+    public void AddPlayer(Player player) //solo se llama en el Host
     {
         _players.Add(player);
-        player.car.transform.position = _circuitController.GetPoint(0);
+        player.car.transform.position = CircuitController.GetStartPos(player.StartOrder);
+
+        if (_players.Count == GameManager.Instance.NumPlayers.Value && StartRaceCor is null)
+            StartRaceCor = StartCoroutine(StartRaceCountdown());
     }
 
-    private class PlayerInfoComparer : Comparer<Player>
+    private IEnumerator StartRaceCountdown()
     {
-        readonly float[] _arcLengths;
+        yield return new WaitForSeconds(1f);
+        RaceCountdown.Value = 3;
+        yield return new WaitForSeconds(1f);
+        RaceCountdown.Value = 2;
+        yield return new WaitForSeconds(1f);
+        RaceCountdown.Value = 1;
+        yield return new WaitForSeconds(1f);
+        RaceCountdown.Value = 0;
+        RaceStarted?.Invoke();
+    }
 
-        public PlayerInfoComparer(float[] arcLengths)
+    private class PlayerOrderComparer : Comparer<Player>
+    {
+        private readonly float[] _arcLengths;
+
+        public PlayerOrderComparer(float[] arcLengths)
         {
             _arcLengths = arcLengths;
         }
@@ -58,17 +130,17 @@ public class RaceController : NetworkBehaviour
         }
     }
 
-    public void UpdateRaceProgress()
+    private void UpdateRaceProgress() //solo se llama en el host
     {
         // Update car arc-lengths
-        float[] arcLengths = new float[_players.Count];
+        _arcLengths = new float[_players.Count];
 
         for (int i = 0; i < _players.Count; ++i)
         {
-            arcLengths[i] = ComputeCarArcLength(i);
+            _arcLengths[i] = ComputeCarArcLength(i);
         }
 
-        _players.Sort(new PlayerInfoComparer(arcLengths));
+        _players.Sort(new PlayerOrderComparer(_arcLengths));
 
         // string myRaceOrder = "";
         // foreach (var player in _players)
@@ -79,18 +151,18 @@ public class RaceController : NetworkBehaviour
         // Debug.Log("Race order: " + myRaceOrder);
     }
 
-    float ComputeCarArcLength(int id)
+    private float ComputeCarArcLength(int idx)
     {
         // Compute the projection of the car position to the closest circuit 
         // path segment and accumulate the arc-length along of the car along
         // the circuit.
-        Vector3 carPos = this._players[id].car.transform.position;
+        Vector3 carPos = this._players[idx].car.transform.position;
 
 
         float minArcL =
-            this._circuitController.ComputeClosestPointArcLength(carPos, out _, out var carProj, out _);
+            this.CircuitController.ComputeClosestPointArcLength(carPos, out _, out var carProj, out _);
 
-        if(_showDebugSpheres) this._debuggingSpheres[id].transform.position = carProj;
+        if(_showDebugSpheres) this._debuggingSpheres[idx].transform.position = carProj;
 
         
         // Esto no lo entiendo, si está en la 0 creo que debería dejarlo como esta
@@ -105,7 +177,7 @@ public class RaceController : NetworkBehaviour
         //                (_players[id].CurrentLap - 1);
         // }
         
-        minArcL += _circuitController.CircuitLength * _players[id].CurrentLap;
+        minArcL += CircuitController.TotalLength * _players[idx].CurrentLap.Value;
         
         return minArcL;
     }

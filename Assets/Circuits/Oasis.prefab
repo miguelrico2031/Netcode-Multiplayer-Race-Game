@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3623332551500133168}
+  - component: {fileID: 9112188168257619912}
   m_Layer: 0
   m_Name: Oasis
   m_TagString: Untagged
@@ -37,6 +38,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9112188168257619912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478798898256062692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6af1ccce0e932943b11ca4378124145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3442916357287686083
 GameObject:
   m_ObjectHideFlags: 0

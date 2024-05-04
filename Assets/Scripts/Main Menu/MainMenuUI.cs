@@ -8,19 +8,15 @@ using UnityEngine.Events;
 public class MainMenuUI : MonoBehaviour
 {
     public string PlayerName { get; private set; } = "Anon";
-    public PlayerInfo.PlayerColor PlayerColor { get; private set; }
+    public Player.PlayerColor PlayerColor { get; private set; }
     public Circuit SelectedCircuit { get; private set; }
-    [Serializable] public class CarColor
-    {
-        public PlayerInfo.PlayerColor Color;
-        public Material Material;
-    }
+
 
     [SerializeField] private TextMeshProUGUI _joinCodeText, _nameText, _playersLogText;
     [SerializeField] private Button _hostBtn, _joinBtn, _startBtn, _carSelectLeftBtn, _carSelectRightBtn, _backBtn;
     [SerializeField] private GameObject _circuitSelect, _joinInput, _nameInput, _playersLog, _errorPanel;
     [SerializeField] private MeshRenderer _carRenderer;
-    [SerializeField] private CarColor[] _carColors;
+    [SerializeField] private Player.CarColor[] _carColors;
 
     private string _joinCode = "";
     private Vector3 _hostBtnOriginalPos;

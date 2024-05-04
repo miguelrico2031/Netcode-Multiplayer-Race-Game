@@ -21,6 +21,7 @@ public class CarController : NetworkBehaviour
     public float InputAcceleration { get; set; }
     public float InputSteering { get; set; }
     public float InputBrake { get; set; }
+    public Transform GoalCheck { get; private set; }
 
     //private PlayerInfo m_PlayerInfo;
 
@@ -57,6 +58,7 @@ public class CarController : NetworkBehaviour
     public void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        GoalCheck = transform.Find("Goal Check");
     }
 
     public void Update()

@@ -19,7 +19,7 @@ public class GameManager : NetworkBehaviour
 {
     [field:SerializeField] public int MaxConnections { get; private set; }
     public static GameManager Instance { get; private set; }
-    public RaceController CurrentRace { get; private set; } = null;
+    public RaceController RaceController { get; set; } = null;
 
     //variables de red
     [HideInInspector] public NetworkVariable<int> NumPlayers;
@@ -77,7 +77,7 @@ public class GameManager : NetworkBehaviour
     #endregion
 
     
-    #region Main Menu Methods
+    #region Main Menu Network Methods
     public async void StartHost(Action<string> sucessCallback, Action failCallback)
     {
         await UnityServices.InitializeAsync();
@@ -95,7 +95,7 @@ public class GameManager : NetworkBehaviour
 
             sucessCallback(joinCode); //llama al callback
         }
-        catch(Exception e) // si falla llama al callback de error
+        catch(Exception _) // si falla llama al callback de error
         {
             // Debug.LogError(e);
             failCallback();
@@ -119,7 +119,7 @@ public class GameManager : NetworkBehaviour
             _networkManager.StartClient();
             successCallback(); //callback cuando termina
         }
-        catch (Exception e) //callback de fallo si falla
+        catch (Exception _) //callback de fallo si falla
         {
             // Debug.LogError(e);
             failCallback();
@@ -214,7 +214,7 @@ public class GameManager : NetworkBehaviour
     
     #region Main Menu RPCS
     [ServerRpc(RequireOwnership = false)]
-    private void AddPlayerInfoServerRpc(ulong id, FixedString64Bytes playerName, PlayerInfo.PlayerColor playerColor)
+    private void AddPlayerInfoServerRpc(ulong id, FixedString64Bytes playerName, Player.PlayerColor playerColor)
     {
         NumPlayers.Value++;
         PlayerInfos.Add(new PlayerInfo(id, playerName, playerColor));
@@ -224,8 +224,34 @@ public class GameManager : NetworkBehaviour
     public void SetPlayerReadyServerRpc(ulong id)
     { //si los jugadores listos para jugar son la mayoria (y hay al menos 2) empieza el juego
         _readyPlayers.Add(id);
-        if (NumPlayers.Value > 1 && _readyPlayers.Count > NumPlayers.Value / 2f) LoadGameScene();
+        // if (NumPlayers.Value > 1 && _readyPlayers.Count > NumPlayers.Value / 2f) 
+            LoadGameScene();
     }
     
+    #endregion
+    
+    
+    #region Game Methods
+
+
+    public void SpawnPlayer() //se llama local y hace un rpc al server para spawnear el jugador
+    {
+        var id = _networkManager.LocalClientId;
+        SpawnPlayerServerRpc(id);
+    }
+    
+    #endregion
+    
+    #region Game RPCs
+    
+    private int tempOrder = 0;
+    [ServerRpc(RequireOwnership = false)]
+    private void SpawnPlayerServerRpc(ulong id)
+    {
+       
+        var player = Instantiate(_playerPrefab);
+        player.StartOrder = tempOrder++;
+        player.GetComponent<NetworkObject>().SpawnAsPlayerObject(id);
+    }
     #endregion
 }

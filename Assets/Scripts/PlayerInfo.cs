@@ -7,17 +7,12 @@ using UnityEngine;
 
 public struct PlayerInfo : INetworkSerializable, IEquatable<PlayerInfo>
 { //struct para guardar informacion sobre cada jugador
-    public enum PlayerColor
-    {
-        Red,
-        Blue,
-        Green
-    }
+
     public ulong ID;
     public FixedString64Bytes Name;
-    public PlayerColor Color;
+    public Player.PlayerColor Color;
 
-    public PlayerInfo(ulong id, FixedString64Bytes playerName, PlayerColor color)
+    public PlayerInfo(ulong id, FixedString64Bytes playerName, Player.PlayerColor color)
     {
         ID = id;
         Name = playerName;

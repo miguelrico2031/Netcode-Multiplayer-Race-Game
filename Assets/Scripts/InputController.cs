@@ -2,15 +2,34 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class InputController : NetworkBehaviour
 {
-    private CarController car;
+    private Player _player;
+    private CarController _car;
+    [HideInInspector] public bool InputEnabled = false;
 
     private void Start()
     {
-        car = GetComponent<Player>().car.GetComponent<CarController>();
+        _player = GetComponent<Player>();
+        _car = _player.car.GetComponent<CarController>();
 
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsHost)
+        {
+            GameManager.Instance.RaceController.RaceStarted += OnRaceStarted;
+        }
+        base.OnNetworkSpawn();
+    }
+
+    private void OnRaceStarted()
+    {
+        GameManager.Instance.RaceController.RaceStarted -= OnRaceStarted;
+        InputEnabled = true;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -34,19 +53,21 @@ public class InputController : NetworkBehaviour
     [ServerRpc]
     private void OnMoveServerRpc(Vector2 input)
     {
-        car.InputAcceleration = input.y;
-        car.InputSteering = input.x;
+        if (!InputEnabled) input = Vector2.zero;
+        _car.InputAcceleration = input.y;
+        _car.InputSteering = input.x;
     }
     
     [ServerRpc]
     private void OnBrakeServerRpc(float input)
     {
-        car.InputBrake = input;
+        if (!InputEnabled) input = 0f;
+        _car.InputBrake = input;
     }
     
     [ServerRpc]
     private void OnAttackServerRpc()
     {
-        
+        if (!InputEnabled) return;
     }
 }
