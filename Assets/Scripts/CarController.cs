@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -27,6 +28,8 @@ public class CarController : NetworkBehaviour
 
     private Rigidbody _rigidbody;
     private float _steerHelper = 0.8f;
+
+    private bool _moveByInput = true;
 
 
     
@@ -69,11 +72,16 @@ public class CarController : NetworkBehaviour
     public void FixedUpdate()
     {
         if (!IsSpawned || !IsServer) return;
+
+        if (_moveByInput)
+        {
+            InputSteering = Mathf.Clamp(InputSteering, -1, 1);
+            InputAcceleration = Mathf.Clamp(InputAcceleration, -1, 1);
+            InputBrake = Mathf.Clamp(InputBrake, 0, 1);
+        }
+        else InputSteering = InputAcceleration = InputBrake = 0f;
         
-        
-        InputSteering = Mathf.Clamp(InputSteering, -1, 1);
-        InputAcceleration = Mathf.Clamp(InputAcceleration, -1, 1);
-        InputBrake = Mathf.Clamp(InputBrake, 0, 1);
+
 
         float steering = maxSteeringAngle * InputSteering;
 
@@ -218,4 +226,28 @@ public class CarController : NetworkBehaviour
     }
 
     #endregion
+
+
+    public void RepositionCar(Action onRepositionedCallback)
+    {
+        StartCoroutine(DisableCarAndReposition(onRepositionedCallback));
+    }
+
+    private IEnumerator DisableCarAndReposition(Action onRepositionedCallback)
+    {
+        _moveByInput = false;
+        var circuitController = GameManager.Instance.RaceController.CircuitController;
+        circuitController.ComputeClosestPointArcLength(transform.position, out var segIdx, out _, out _);
+        var newPosition = circuitController.GetPoint(segIdx) + Vector3.up * 1.5f;
+        var newDirection = circuitController.GetSegment(segIdx);
+        var newRotation = Quaternion.LookRotation(newDirection);
+        // transform.SetPositionAndRotation(newPosition, newRotation);
+        _rigidbody.velocity = _rigidbody.angularVelocity = Vector3.zero;
+        _rigidbody.MovePosition(newPosition);
+        _rigidbody.MoveRotation(newRotation);
+        yield return new WaitForSeconds(1.5f);
+
+        _moveByInput = true;
+        onRepositionedCallback();
+    }
 }

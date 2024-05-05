@@ -53,9 +53,10 @@ public class CircuitController : MonoBehaviour
         TotalLength = _cumArcLength[_cumArcLength.Length - 1];
     }
 
-    private Vector3 GetSegment(int idx)
+    public Vector3 GetSegment(int idx)
     {
-        return _pathPos[idx + 1] - _pathPos[idx];
+        if (idx < _pathPos.Length - 1) return _pathPos[idx + 1] - _pathPos[idx];
+        else return _pathPos[0] - _pathPos[idx];
     }
 
     public Vector3 GetPoint(int idx) => _pathPos[idx];

@@ -61,7 +61,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5043030694224894784}
   m_Layer: 0
-  m_Name: startPos
+  m_Name: StartPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

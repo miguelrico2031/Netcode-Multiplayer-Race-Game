@@ -8,7 +8,8 @@ public class Player : NetworkBehaviour
 {
     // Player Info
     public string Name { get; set; }
-    public int ID { get; set; }
+    public ulong ID { get; set; }
+    public int IndexInRaceController { get; set; }
 
     // Race Info
     public GameObject car;

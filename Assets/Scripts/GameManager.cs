@@ -95,7 +95,7 @@ public class GameManager : NetworkBehaviour
 
             sucessCallback(joinCode); //llama al callback
         }
-        catch(Exception _) // si falla llama al callback de error
+        catch // si falla llama al callback de error
         {
             // Debug.LogError(e);
             failCallback();
@@ -119,7 +119,7 @@ public class GameManager : NetworkBehaviour
             _networkManager.StartClient();
             successCallback(); //callback cuando termina
         }
-        catch (Exception _) //callback de fallo si falla
+        catch  //callback de fallo si falla
         {
             // Debug.LogError(e);
             failCallback();
@@ -250,6 +250,7 @@ public class GameManager : NetworkBehaviour
     {
        
         var player = Instantiate(_playerPrefab);
+        player.ID = id;
         player.StartOrder = tempOrder++;
         player.GetComponent<NetworkObject>().SpawnAsPlayerObject(id);
     }
