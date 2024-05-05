@@ -6,14 +6,22 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    public int Index;
+    [HideInInspector] public int Index;
 
+    [SerializeField] private GameObject _visualPrefab;
+    
     private readonly HashSet<Player> _checkedPlayers = new();
+    private RaceController _raceController;
     private CircuitController _circuit;
+    private GameObject _visual;
 
     private void Start()
     {
-        _circuit = GameManager.Instance.RaceController.CircuitController;
+        _raceController = GameManager.Instance.RaceController;
+        _circuit = _raceController.CircuitController;
+        var t = transform;
+        _visual = Instantiate(_visualPrefab, t.position, t.rotation, t);
+        _visual.transform.localScale = GetComponent<BoxCollider>().size;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,12 +36,17 @@ public class Checkpoint : MonoBehaviour
         }
 
         _checkedPlayers.Add(player);
+        _raceController.UpdateCheckpointVisual(player.ID, Index, false);
     }
 
     public bool IsPlayerChecked(Player p) => _checkedPlayers.Contains(p);
 
-    public void UncheckPlayer(Player p) => _checkedPlayers.Remove(p);
+    public void UncheckPlayer(Player p)
+    {
+        _checkedPlayers.Remove(p);
+        _raceController.UpdateCheckpointVisual(p.ID, Index, true);
+    }
 
-
+    public void ToggleVisual(bool active) => _visual.SetActive(active);
 
 }

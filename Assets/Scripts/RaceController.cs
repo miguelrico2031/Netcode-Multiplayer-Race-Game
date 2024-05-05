@@ -94,6 +94,7 @@ public class RaceController : NetworkBehaviour
     public void AddPlayer(Player player) //solo se llama en el Host
     {
         _players.Add(player);
+        player.IndexInRaceController = _players.Count - 1;
         player.car.transform.position = CircuitController.GetStartPos(player.StartOrder);
 
         if (_players.Count == GameManager.Instance.NumPlayers.Value && StartRaceCor is null)
@@ -124,7 +125,7 @@ public class RaceController : NetworkBehaviour
 
         public override int Compare(Player x, Player y)
         {
-            if (_arcLengths[x.ID] < _arcLengths[y.ID])
+            if (_arcLengths[x.IndexInRaceController] < _arcLengths[y.IndexInRaceController])
                 return 1;
             else return -1;
         }
@@ -180,5 +181,17 @@ public class RaceController : NetworkBehaviour
         minArcL += CircuitController.TotalLength * _players[idx].CurrentLap.Value;
         
         return minArcL;
+    }
+
+    public void UpdateCheckpointVisual(ulong id, int index, bool active)
+    {
+        UCVClientRpc(id, index, active);
+    }
+
+    [ClientRpc(RequireOwnership = false)]
+    private void UCVClientRpc(ulong id, int index, bool active)
+    {
+        if (NetworkManager.Singleton.LocalClientId != id) return;
+        CircuitController.Checkpoints[index].ToggleVisual(active);
     }
 }

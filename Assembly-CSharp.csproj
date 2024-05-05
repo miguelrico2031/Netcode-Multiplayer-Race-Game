@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\InputController.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\OverturnCheck.cs" />
      <Compile Include="Assets\Scripts\Checkpoint.cs" />
      <Compile Include="Assets\Scripts\AxleInfo.cs" />
      <Compile Include="Assets\Scripts\Main Menu\MainMenuUI.cs" />
