@@ -22,16 +22,22 @@ public class GoalController : MonoBehaviour
         circuitController.ComputeClosestPointArcLength(carController.GoalCheck.position, out int segmentIdx, out _, out _);
         bool rightdirection = segmentIdx != 0;
 
-            if (allChecked && rightdirection)
+        bool playerWon = false;
+        
+        if (allChecked && rightdirection)
         {
             player.CurrentLap.Value++;
             if (player.CurrentLap.Value > 3)
             {
+                playerWon = true;
                 OnPlayerFinish?.Invoke(player);
             }
         }
+
+        if (playerWon) return;
         
         foreach(var checkpoint in circuitController.Checkpoints) checkpoint.UncheckPlayer(player);
         
+
     }
 }
