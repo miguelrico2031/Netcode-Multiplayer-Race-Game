@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,7 +11,8 @@ public class RaceController : NetworkBehaviour
     public event Action RaceStarted; //variable del host solo (de momento)
     public NetworkVariable<int> RaceCountdown;
     public CircuitController CircuitController { get; private set; }
-    
+    public NetworkVariable<FixedString64Bytes> PlayerOrder { get; private set; }
+
     [Serializable]
     public struct CircuitAndPrefab
     {
@@ -87,14 +89,7 @@ public class RaceController : NetworkBehaviour
     
     
     #endregion
-
-    // FUNCION QUE HA HECHO EZE PARA PILLAR LA POSICION DEL JUGADOR EN LA LISTA NO SE SI ESTO VA AQUI PERO POR PROBAR
-
-    public int GetPlayerPosition(int playerID)
-    {
-        return Array.FindIndex(_players.ToArray(), player => player.ID == playerID) + 1;
-    }
-    
+  
     
     public void AddPlayer(Player player) //solo se llama en el Host
     {
@@ -148,6 +143,8 @@ public class RaceController : NetworkBehaviour
 
         _players.Sort(new PlayerOrderComparer(_arcLengths));
 
+        UpdatePlayerOrderInfo();
+
         // string myRaceOrder = "";
         // foreach (var player in _players)
         // {
@@ -188,10 +185,24 @@ public class RaceController : NetworkBehaviour
         return minArcL;
     }
 
+    private void UpdatePlayerOrderInfo()
+    {
+        var s = "";
+        foreach (var p in _players)
+        {
+            s += $"{p.ID} ";
+        }
+
+        PlayerOrder.Value = new FixedString64Bytes(s);
+
+    }
+
     public void UpdateCheckpointVisual(ulong id, int index, bool active)
     {
         UCVClientRpc(id, index, active);
     }
+
+    
 
     [ClientRpc(RequireOwnership = false)]
     private void UCVClientRpc(ulong id, int index, bool active)

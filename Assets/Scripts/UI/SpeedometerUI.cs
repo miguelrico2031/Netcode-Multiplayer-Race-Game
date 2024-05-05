@@ -33,7 +33,7 @@ public class SpeedometerUI : MonoBehaviour
 
     private void Update()
     {
-        if (_playerRb is null || !speedometerActive) return;
+        if (!speedometerActive || _playerRb is null) return;
 
         UpdateSpeedValue();
         UpdateSpeedometerString();
