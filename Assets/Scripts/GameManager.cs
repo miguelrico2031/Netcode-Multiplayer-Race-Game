@@ -20,6 +20,7 @@ public class GameManager : NetworkBehaviour
     [field:SerializeField] public int MaxConnections { get; private set; }
     public static GameManager Instance { get; private set; }
     public RaceController RaceController { get; set; } = null;
+    public GameplayHUDUI HUD { get; set; } = null;
 
     //variables de red
     [HideInInspector] public NetworkVariable<int> NumPlayers;
@@ -35,7 +36,6 @@ public class GameManager : NetworkBehaviour
     private MainMenuUI _mainMenuUI;
     private readonly HashSet<ulong> _readyPlayers = new();
     private bool _disconnectedLocally = false;
-
 
     
     

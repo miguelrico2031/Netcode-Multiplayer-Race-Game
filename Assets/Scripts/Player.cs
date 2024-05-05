@@ -63,6 +63,9 @@ public class Player : NetworkBehaviour
             var vcam = FindObjectOfType<CinemachineVirtualCamera>();
             vcam.Follow = car.transform;
             vcam.LookAt = car.transform;
+
+            FindObjectOfType<SpeedometerUI>().SetPlayerRb(car.GetComponent<Rigidbody>());
+
         }
         
         var id = GetComponent<NetworkObject>().OwnerClientId;

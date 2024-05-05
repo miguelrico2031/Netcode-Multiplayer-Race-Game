@@ -88,7 +88,12 @@ public class RaceController : NetworkBehaviour
     
     #endregion
 
-    
+    // FUNCION QUE HA HECHO EZE PARA PILLAR LA POSICION DEL JUGADOR EN LA LISTA NO SE SI ESTO VA AQUI PERO POR PROBAR
+
+    public int GetPlayerPosition(int playerID)
+    {
+        return Array.FindIndex(_players.ToArray(), player => player.ID == playerID) + 1;
+    }
     
     
     public void AddPlayer(Player player) //solo se llama en el Host

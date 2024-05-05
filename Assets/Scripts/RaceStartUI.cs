@@ -44,5 +44,6 @@ public class RaceStartUI : MonoBehaviour
             t += .1f;
         }
         _raceStartText.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
