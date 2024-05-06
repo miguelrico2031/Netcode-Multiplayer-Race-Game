@@ -7,13 +7,12 @@ public class PositionIndicatorUI : MonoBehaviour
 
     #region public
 
-    public bool positionIndicatorActive = false;
 
     #endregion
 
     #region private
 
-    private TextMeshProUGUI PositionIndicatorText;
+    private TextMeshProUGUI _positionIndicatorText;
     private int _playerPosition;
     private int _totalPlayers;
 
@@ -23,40 +22,28 @@ public class PositionIndicatorUI : MonoBehaviour
 
     private void Start()
     {
-        PositionIndicatorText = GetComponent<TextMeshProUGUI>();
-        PositionIndicatorText.text = "0/0";
+        _positionIndicatorText = GetComponent<TextMeshProUGUI>();
+        _positionIndicatorText.text = "N/A";
 
         _totalPlayers = GetTotalPlayers();
-
-        StartPositionIndicator();
     }
 
     private void Update()
     {
-        if (!positionIndicatorActive) return;
-
-        UpdatePlayerPositionNumber();
-        UpdatePositionIndicatorString();
+        UpdatePlayerPositionList();
     }
 
-    public void StartPositionIndicator()
-    {
-        positionIndicatorActive = true;
-    }
 
-    // creo que esto así... mal.  porque usa un foreach en cada frame y well, no es lo mejor
-    private void UpdatePlayerPositionNumber()
+    private void UpdatePlayerPositionList()
     {
-        foreach (var p in GameManager.Instance.RaceController.PlayerOrder.Value.Value.Split(" "))
+        _positionIndicatorText.text = "";
+        var st = GameManager.Instance.RaceController.PlayerOrder.Value.Value;
+        var stsplit = st.Split(";");
+        foreach (var p in stsplit)
         {
-            var id = ulong.Parse(p);
-            PositionIndicatorText.text += $"{id}\n";
+            if(p == "") continue;
+            _positionIndicatorText.text += $"{p}\n";
         }
-    }
-
-    private void UpdatePositionIndicatorString()
-    {
-        PositionIndicatorText.text = _playerPosition.ToString() + "º/" + _totalPlayers.ToString();
     }
     
     private int GetTotalPlayers()

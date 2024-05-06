@@ -39,11 +39,6 @@ public class Player : NetworkBehaviour
         CurrentLap = new();
     }
 
-    private void Start()
-    {
-        var goal = FindObjectOfType<GoalController>();
-        goal.OnPlayerFinish += OnPlayerFinish;
-    }
 
     private void OnDisable()
     {
@@ -53,22 +48,39 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
         if (IsHost)
         {
             GameManager.Instance.RaceController.AddPlayer(this);
-            CurrentLap.Value = 1;
+            CurrentLap.Value = 0;
+
+            var goal = FindObjectOfType<GoalController>(true);
+            goal.OnPlayerFinish += OnPlayerFinish;
+
+            foreach (var checkpoint in FindObjectsOfType<Checkpoint>())
+            {
+                checkpoint.CheckPlayer(this);
+            }
         }
+
+
+        var vcam = FindObjectOfType<CinemachineVirtualCamera>();
+        GetComponentInChildren<NameTextOrientation>().Cam = vcam.transform;
+        
+        
         if (IsOwner)
         {
             InputSystem.Instance.SetPlayer(this);
-            var vcam = FindObjectOfType<CinemachineVirtualCamera>();
             vcam.Follow = car.transform;
             vcam.LookAt = car.transform;
 
-            FindObjectOfType<SpeedometerUI>().SetPlayerRb(car.GetComponent<Rigidbody>());
-
+            var speedo = FindObjectOfType<SpeedometerUI>();
+            var rb = car.GetComponent<Rigidbody>();
+            speedo.SetPlayerRb(rb);
         }
-        
+
+
+
         var id = GetComponent<NetworkObject>().OwnerClientId;
         foreach (var pi in GameManager.Instance.PlayerInfos)
         {
@@ -79,7 +91,6 @@ public class Player : NetworkBehaviour
 
         SetColorAndName();
         
-        base.OnNetworkSpawn();
     }
 
     private void SetColorAndName()
@@ -94,7 +105,7 @@ public class Player : NetworkBehaviour
             break;
         }
 
-        _nameText.text = PlayerInfo.Name.Value;
+        Name = _nameText.text = PlayerInfo.Name.Value;
     }
 
     private void OnPlayerFinish(Player p)

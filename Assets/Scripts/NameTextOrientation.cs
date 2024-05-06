@@ -6,15 +6,12 @@ using UnityEngine;
 
 public class NameTextOrientation : MonoBehaviour
 {
-    private Transform _cam;
+    public Transform Cam;
 
-    private void Awake()
-    {
-        _cam = FindObjectOfType<CinemachineVirtualCamera>().transform;
-    }
 
     private void LateUpdate()
     {
-        transform.rotation = Quaternion.LookRotation(_cam.forward, _cam.up);
+        if (!Cam) return;
+        transform.rotation = Quaternion.LookRotation(Cam.forward, Cam.up);
     }
 }

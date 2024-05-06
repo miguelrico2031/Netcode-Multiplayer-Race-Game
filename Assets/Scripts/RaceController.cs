@@ -19,16 +19,20 @@ public class RaceController : NetworkBehaviour
         public Circuit Circuit;
         public CircuitController Prefab;
     }
-    
+
+    [SerializeField] private float _checkRaceOrderDelta;
     [SerializeField] private CircuitAndPrefab[] _circuits;
     [SerializeField] private bool _showDebugSpheres; 
     
     private readonly List<Player> _players = new(); //solo host de momento
+    private  List<Player> _sortedPlayers = new(); //solo host de momento
     private GameObject[] _debuggingSpheres; // a saber donde esto creo host
 
     private Coroutine StartRaceCor = null;
 
     private float[] _arcLengths;
+
+    private float _raceOrderTimer = 0f;
     
     #region Callbacks
 
@@ -36,6 +40,7 @@ public class RaceController : NetworkBehaviour
     {
         RaceCountdown = new();
         GameManager.Instance.RaceController = this;
+        PlayerOrder = new();
     }
 
     public override void OnNetworkSpawn()
@@ -44,16 +49,35 @@ public class RaceController : NetworkBehaviour
         
         if(_showDebugSpheres) InitDebugSpheres();
 
-        GameManager.Instance.SpawnPlayer();
+        //GameManager.Instance.SpawnPlayer();
+
+        if(IsHost)
+        {
+            Invoke(nameof(SpawnPlayerClientRpc), 2f);
+        }
         
         base.OnNetworkSpawn();
     }
+
+
+
+    [ClientRpc(RequireOwnership = false)]
+    private void SpawnPlayerClientRpc()
+    {
+        GameManager.Instance.SpawnPlayer();
+    }
+
 
     private void Update()
     {
         if (!IsSpawned || !IsHost) return;
 
-        UpdateRaceProgress();
+        _raceOrderTimer += Time.deltaTime;
+        if(_raceOrderTimer >= _checkRaceOrderDelta)
+        {
+            _raceOrderTimer = 0f;
+            UpdateRaceProgress();
+        }
     }
     
     #endregion
@@ -86,14 +110,14 @@ public class RaceController : NetworkBehaviour
 
         CircuitController.GetComponent<LineRenderer>().enabled = true;
     }
-    
-    
+
+
     #endregion
-  
-    
+
     public void AddPlayer(Player player) //solo se llama en el Host
     {
         _players.Add(player);
+        _sortedPlayers.Add(player);
         player.IndexInRaceController = _players.Count - 1;
         player.car.transform.position = CircuitController.GetStartPos(player.StartOrder);
 
@@ -125,10 +149,13 @@ public class RaceController : NetworkBehaviour
 
         public override int Compare(Player x, Player y)
         {
+            Debug.Log($"arc de {x.Name}: {_arcLengths[x.IndexInRaceController]}");
+            Debug.Log($"arc de {y.Name}: {_arcLengths[x.IndexInRaceController]}");
+
             if (_arcLengths[x.IndexInRaceController] < _arcLengths[y.IndexInRaceController])
                 return 1;
             else return -1;
-        }
+        } 
     }
 
     private void UpdateRaceProgress() //solo se llama en el host
@@ -141,17 +168,10 @@ public class RaceController : NetworkBehaviour
             _arcLengths[i] = ComputeCarArcLength(i);
         }
 
-        _players.Sort(new PlayerOrderComparer(_arcLengths));
+        _sortedPlayers.Sort(new PlayerOrderComparer(_arcLengths));
 
         UpdatePlayerOrderInfo();
 
-        // string myRaceOrder = "";
-        // foreach (var player in _players)
-        // {
-        //     myRaceOrder += player.Name + " ";
-        // }
-        //
-        // Debug.Log("Race order: " + myRaceOrder);
     }
 
     private float ComputeCarArcLength(int idx)
@@ -159,7 +179,7 @@ public class RaceController : NetworkBehaviour
         // Compute the projection of the car position to the closest circuit 
         // path segment and accumulate the arc-length along of the car along
         // the circuit.
-        Vector3 carPos = this._players[idx].car.transform.position;
+        Vector3 carPos = _players[idx].car.transform.position;
 
 
         float minArcL =
@@ -188,9 +208,9 @@ public class RaceController : NetworkBehaviour
     private void UpdatePlayerOrderInfo()
     {
         var s = "";
-        foreach (var p in _players)
+        foreach (var p in _sortedPlayers)
         {
-            s += $"{p.ID} ";
+            s += $"{p.Name};";
         }
 
         PlayerOrder.Value = new FixedString64Bytes(s);

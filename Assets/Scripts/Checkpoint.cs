@@ -47,6 +47,8 @@ public class Checkpoint : MonoBehaviour
         _raceController.UpdateCheckpointVisual(p.ID, Index, true);
     }
 
+    public void CheckPlayer(Player p) => _checkedPlayers.Add(p);
+
     public void ToggleVisual(bool active) => _visual.SetActive(active);
 
 }

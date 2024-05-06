@@ -1,19 +1,18 @@
 using UnityEngine;
 using TMPro;
+using Unity.Netcode;
 
 public class SpeedometerUI : MonoBehaviour
 {
-    #region public
-    
-    public bool speedometerActive = false;
-    
-    #endregion
+
 
     #region private
+
     
-    private TextMeshProUGUI SpeedometerText;
+    private TextMeshProUGUI _speedometerText;
     private Rigidbody _playerRb = null;
     private float _speed;
+    private Vector3 _lastPosition;
 
     #endregion
 
@@ -25,37 +24,43 @@ public class SpeedometerUI : MonoBehaviour
 
     private void Start()
     {
-        SpeedometerText = GetComponent<TextMeshProUGUI>();
-        SpeedometerText.text = "000 KM/H";
+        _speedometerText = GetComponent<TextMeshProUGUI>();
+        _speedometerText.text = "000 KM/H";
 
-        StartSpeedometer();
+
     }
 
     private void Update()
     {
-        if (!speedometerActive || _playerRb is null) return;
-
-        UpdateSpeedValue();
+        if (_playerRb is null) return;
         UpdateSpeedometerString();
     }
 
-    public void StartSpeedometer()
+    public void FixedUpdate()
     {
-        speedometerActive = true;
+        if (_playerRb is null) return;
+
+        UpdateSpeedValue();
     }
+
 
     private void UpdateSpeedValue()
     {
-        _speed = (int) (_playerRb.velocity.magnitude * _speedMultiplier);
+        var vel = (_playerRb.position - _lastPosition).magnitude / Time.fixedDeltaTime;
+        _speed = (int) (vel * _speedMultiplier);
+        _lastPosition = _playerRb.position;
+
+        //_speed = (int) (_playerRb.velocity.magnitude * _speedMultiplier);
     }
 
     private void UpdateSpeedometerString()
     {
-        SpeedometerText.text = _speed.ToString("000") + " KM/H";
+        _speedometerText.text = _speed.ToString("000") + " KM/H";
     }
 
     public void SetPlayerRb(Rigidbody rb)           // Se llama desde Player para cada jugador (Owner)
     {
         _playerRb = rb;
+        _lastPosition = rb.position;
     }
 }
