@@ -122,3 +122,8 @@ public class CircuitController : MonoBehaviour
         return minArcL;
     }
 }
+
+public enum Circuit
+{
+    Nascar, Oasis, OwlPlains, Rainy
+}

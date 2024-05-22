@@ -30,7 +30,7 @@ public class InputSystem : MonoBehaviour
     public void SetPlayer(Player player)
     {
         _player = player;
-        var input = _player.GetComponent<InputController>();
+        var input = _player.GetComponent<IInputController>();
         var playerInput = FindObjectOfType<PlayerInput>();
         
         _move = playerInput.actions["Move"];
@@ -40,6 +40,7 @@ public class InputSystem : MonoBehaviour
         
         _brake = playerInput.actions["Brake"];
         _brake.performed += input.OnBrake;
+        _brake.canceled += input.OnBrake;
         _brake.Enable();
         
         _attack = playerInput.actions["Attack"];

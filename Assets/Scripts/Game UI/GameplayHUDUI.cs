@@ -10,6 +10,7 @@ public class GameplayHUDUI : MonoBehaviour
     [SerializeField] private SpeedometerUI _speedometer;
     [SerializeField] private TimerUI _timer;
     [SerializeField] private PositionIndicatorUI _positionIndicator;
+    [SerializeField] private TextMeshProUGUI _backwardsText;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,9 @@ public class GameplayHUDUI : MonoBehaviour
 
         //Activas UI
         gameObject.GetComponent<Canvas>().enabled = true;
-        _timer.StartTimer();                                                                        // Interesa que el temporizador empiece después de la cuenta atrás
+        _timer.StartTimer();                                                                        // Interesa que el temporizador empiece despuï¿½s de la cuenta atrï¿½s
     }
+
+    public void ShowBackwardsText() => _backwardsText.enabled = true;
+    public void HideBackwardsText() => _backwardsText.enabled = false;
 }

@@ -26,9 +26,9 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!NetworkManager.Singleton.IsHost || !other.TryGetComponent<CarController>(out var carController)) return;
+        if (!NetworkManager.Singleton.IsHost || !other.TryGetComponent<ICarController>(out var carController)) return;
         
-        var player = carController.GetComponentInParent<Player>();
+        var player = (carController as Component).GetComponentInParent<Player>();
 
         for (int i = 0; i < _circuit.Checkpoints.Length; i++)
         {

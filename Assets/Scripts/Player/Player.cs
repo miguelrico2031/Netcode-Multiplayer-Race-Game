@@ -28,6 +28,9 @@ public class Player : NetworkBehaviour
 
     [field:SerializeField] public CarColor[] CarColors { get; private set; }
 
+    public NetworkVariable<float> ArcLength; //esta variable se actualiza cada segundo
+    private int _secondsGoingBackwards = 0;
+    private bool _backwardsTextEnabled = false;
 
 
     [SerializeField] private TextMeshProUGUI _nameText;
@@ -37,6 +40,7 @@ public class Player : NetworkBehaviour
     private void Awake()
     {
         CurrentLap = new();
+        ArcLength = new ();
     }
 
 
@@ -53,7 +57,7 @@ public class Player : NetworkBehaviour
         {
             GameManager.Instance.RaceController.AddPlayer(this);
             CurrentLap.Value = 0;
-
+            ArcLength.Value = 0f;
             var goal = FindObjectOfType<GoalController>(true);
             goal.OnPlayerFinish += OnPlayerFinish;
 
@@ -61,6 +65,11 @@ public class Player : NetworkBehaviour
             {
                 checkpoint.CheckPlayer(this);
             }
+        }
+
+        if (IsOwner)
+        {
+            ArcLength.OnValueChanged += OnArcLengthChanged;
         }
 
 
@@ -112,7 +121,28 @@ public class Player : NetworkBehaviour
     {
         if (p == this)
         {
-            GetComponent<InputController>().InputEnabled = false;
+            GetComponent<IInputController>().InputEnabled = false;
+        }
+    }
+    
+    private void OnArcLengthChanged(float previous, float newArc)
+    {
+        Debug.Log("arcotal");
+        if (previous > newArc)
+        {
+            Debug.Log("arco patras");
+            if (++_secondsGoingBackwards > 3 && !_backwardsTextEnabled)
+            {
+                GameManager.Instance.HUD.ShowBackwardsText();
+                _backwardsTextEnabled = true;
+            }
+        }
+        else if(_backwardsTextEnabled)
+        {
+            Debug.Log("arco bien");
+            _secondsGoingBackwards = 0;
+            _backwardsTextEnabled = false;
+            GameManager.Instance.HUD.HideBackwardsText();
         }
     }
 }

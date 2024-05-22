@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3295913964536493266
+--- !u!1 &4594715139307052890
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8386771588634071396}
-  - component: {fileID: 440940258544108754}
-  - component: {fileID: 8021628564066223428}
+  - component: {fileID: 3275780265037563420}
+  - component: {fileID: 8187790136548550067}
+  - component: {fileID: 166212832702311200}
   m_Layer: 0
   m_Name: '@GameManager'
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8386771588634071396
+--- !u!4 &3275780265037563420
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3295913964536493266}
+  m_GameObject: {fileID: 4594715139307052890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 36.203297, y: -5.9379597, z: -47.921677}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,19 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &440940258544108754
+--- !u!114 &8187790136548550067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3295913964536493266}
+  m_GameObject: {fileID: 4594715139307052890}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4006402918
+  GlobalObjectIdHash: 1240474618
   InScenePlacedSourceGlobalObjectIdHash: 1224647905
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -54,13 +54,13 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &8021628564066223428
+--- !u!114 &166212832702311200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3295913964536493266}
+  m_GameObject: {fileID: 4594715139307052890}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c47edc103b63d14e8f5c357dfa69f67, type: 3}
@@ -71,4 +71,4 @@ MonoBehaviour:
     m_InternalValue: 0
   SelectedCircuit:
     m_InternalValue: 0
-  _playerPrefab: {fileID: 6122997122448442885, guid: 8cb0f194315f5874797b12dac7f6cdfb, type: 3}
+  _playerPrefab: {fileID: 5877741144707485896, guid: 8cb0f194315f5874797b12dac7f6cdfb, type: 3}

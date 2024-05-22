@@ -4,16 +4,18 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-public class InputController : NetworkBehaviour
+public class InputControllerBase : NetworkBehaviour, IInputController
 {
+    public bool InputEnabled { get; set; }
+    
+    
     private Player _player;
-    private CarController _car;
-    [HideInInspector] public bool InputEnabled = false;
+    private ICarController _car;
 
     private void Start()
     {
         _player = GetComponent<Player>();
-        _car = _player.car.GetComponent<CarController>();
+        _car = _player.car.GetComponent<ICarController>();
 
     }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class CarController : NetworkBehaviour
+public class CarControllerBase : NetworkBehaviour, ICarController
 {
     #region Variables
 
@@ -18,17 +18,15 @@ public class CarController : NetworkBehaviour
     [SerializeField] private float downForce = 100f;
     [SerializeField] private float slipLimit = 0.2f;
 
-    private float CurrentRotation { get; set; }
     public float InputAcceleration { get; set; }
     public float InputSteering { get; set; }
     public float InputBrake { get; set; }
     public Transform GoalCheck { get; private set; }
 
-    //private PlayerInfo m_PlayerInfo;
-
+    
+    private float _currentRotation;
     private Rigidbody _rigidbody;
     private float _steerHelper = 0.8f;
-
     private bool _moveByInput = true;
 
 
@@ -215,14 +213,14 @@ public class CarController : NetworkBehaviour
         }
 
 // this if is needed to avoid gimbal lock problems that will make the car suddenly shift direction
-        if (Mathf.Abs(CurrentRotation - transform.eulerAngles.y) < 10f)
+        if (Mathf.Abs(_currentRotation - transform.eulerAngles.y) < 10f)
         {
-            var turnAdjust = (transform.eulerAngles.y - CurrentRotation) * _steerHelper;
+            var turnAdjust = (transform.eulerAngles.y - _currentRotation) * _steerHelper;
             Quaternion velRotation = Quaternion.AngleAxis(turnAdjust, Vector3.up);
             _rigidbody.velocity = velRotation * _rigidbody.velocity;    
         }
 
-        CurrentRotation = transform.eulerAngles.y;
+        _currentRotation = transform.eulerAngles.y;
     }
 
     #endregion
@@ -250,4 +248,11 @@ public class CarController : NetworkBehaviour
         _moveByInput = true;
         onRepositionedCallback();
     }
+
+    public void ServerSetCarTransform(Vector3 pos, Quaternion rot)
+    {
+        _rigidbody.position = pos;
+        _rigidbody.rotation = rot;
+    }
+
 }

@@ -33,6 +33,9 @@ public class RaceController : NetworkBehaviour
     private float[] _arcLengths;
 
     private float _raceOrderTimer = 0f;
+    private bool _raceStarted;
+
+    private float _playerUpdateArcTimer; //para actualizar solo 1vez/segundo los arcos en los jugadores (para comprobar si van para atras)
     
     #region Callbacks
 
@@ -73,6 +76,7 @@ public class RaceController : NetworkBehaviour
         if (!IsSpawned || !IsHost) return;
 
         _raceOrderTimer += Time.deltaTime;
+        _playerUpdateArcTimer += Time.deltaTime;
         if(_raceOrderTimer >= _checkRaceOrderDelta)
         {
             _raceOrderTimer = 0f;
@@ -119,8 +123,9 @@ public class RaceController : NetworkBehaviour
         _players.Add(player);
         _sortedPlayers.Add(player);
         player.IndexInRaceController = _players.Count - 1;
-        player.car.transform.position = CircuitController.GetStartPos(player.StartOrder);
-
+        // player.car.transform.position = CircuitController.GetStartPos(player.StartOrder);
+        player.car.GetComponent<ICarController>().ServerSetCarTransform(CircuitController.GetStartPos(player.StartOrder), player.car.transform.rotation);
+        
         if (_players.Count == GameManager.Instance.NumPlayers.Value && StartRaceCor is null)
             StartRaceCor = StartCoroutine(StartRaceCountdown());
     }
@@ -135,6 +140,7 @@ public class RaceController : NetworkBehaviour
         RaceCountdown.Value = 1;
         yield return new WaitForSeconds(1f);
         RaceCountdown.Value = 0;
+        _raceStarted = true;
         RaceStarted?.Invoke();
     }
 
@@ -149,8 +155,6 @@ public class RaceController : NetworkBehaviour
 
         public override int Compare(Player x, Player y)
         {
-            Debug.Log($"arc de {x.Name}: {_arcLengths[x.IndexInRaceController]}");
-            Debug.Log($"arc de {y.Name}: {_arcLengths[x.IndexInRaceController]}");
 
             if (_arcLengths[x.IndexInRaceController] < _arcLengths[y.IndexInRaceController])
                 return 1;
@@ -163,10 +167,13 @@ public class RaceController : NetworkBehaviour
         // Update car arc-lengths
         _arcLengths = new float[_players.Count];
 
+        bool updateArc = _raceStarted && _playerUpdateArcTimer >= 1f;
         for (int i = 0; i < _players.Count; ++i)
         {
             _arcLengths[i] = ComputeCarArcLength(i);
+            if (updateArc) _players[i].ArcLength.Value = _arcLengths[i];
         }
+        if(updateArc) _playerUpdateArcTimer = 0f;
 
         _sortedPlayers.Sort(new PlayerOrderComparer(_arcLengths));
 

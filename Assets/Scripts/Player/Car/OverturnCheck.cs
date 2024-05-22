@@ -16,7 +16,7 @@ public class OverturnCheck : MonoBehaviour
     private Collider[] _overlaps = new Collider[10];
     private HashSet<string> _checkTags;
     private bool _doChecking = true;
-    private CarController _carController;
+    private ICarController _carController;
     private Vector3 _lastPos;
     private int _checksSincePosChanged = 0;
     
@@ -25,7 +25,7 @@ public class OverturnCheck : MonoBehaviour
         _overlapBoxHalfSize = _overlapBoxSize / 2f;
         _networkManager = NetworkManager.Singleton;
         _checkTags = new(_environmentTags);
-        _carController = GetComponentInParent<CarController>();
+        _carController = GetComponentInParent<ICarController>();
     }
 
     private void Update()
@@ -40,7 +40,7 @@ public class OverturnCheck : MonoBehaviour
     }
     
 
-    private void CheckOverturn()
+    private void CheckOverturn() //codigo de servidor
     {
         int length = Physics.OverlapBoxNonAlloc(transform.position, _overlapBoxHalfSize, _overlaps, transform.rotation);
         for (int i = 0; i < length; i++)
@@ -56,16 +56,16 @@ public class OverturnCheck : MonoBehaviour
             _lastPos = transform.position;
             _checksSincePosChanged = 0;
         }
-        else if (++_checksSincePosChanged >= 6)
-        {
-            _checksSincePosChanged = 0;
-            HandleOverturn();
-        }
+
+        // else if (++_checksSincePosChanged >= 6)
+        // {
+        //     _checksSincePosChanged = 0;
+        //     HandleOverturn();
+        // }
     }
 
     private void HandleOverturn()
     {
-        Debug.Log("bocabajo");
         _doChecking = false;
         _checksSincePosChanged = 0;
         _carController.RepositionCar(() => _doChecking = true);
