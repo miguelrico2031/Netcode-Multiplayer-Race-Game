@@ -131,14 +131,12 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
 
     public void FixedUpdate()
     {
-        // if (!IsOwner) return;
         if (!IsOwner && !IsHost) return;
         while (_timer.CanTick())
         {
             HandleClientTick();
             HandleServerTick();
         }
-        // Move(InputAcceleration, InputSteering, InputBrake);
     }
 
     #endregion
@@ -166,23 +164,6 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
 
         if (bufferIndex == -1) return;
         SendToClientRpc(_serverStateBuffer.Get(bufferIndex));
-    }
-
-    private StatePayload SimulateMovement(InputPayload inputPayload)
-    {
-        Physics.simulationMode = SimulationMode.Script;
-        Move(inputPayload.Acceleration, inputPayload.Steering, inputPayload.Brake);
-        Physics.Simulate(Time.fixedDeltaTime);
-        Physics.simulationMode = SimulationMode.FixedUpdate;
-        
-        return new()
-        {
-            Tick = inputPayload.Tick,
-            Position = _rigidbody.position,
-            Rotation = _rigidbody.rotation,
-            Velocity = _rigidbody.velocity,
-            AngularVelocity = _rigidbody.angularVelocity
-        };
     }
 
     [ClientRpc]
@@ -226,18 +207,13 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
         var isLastServerStateValid = !_lastServerState.IsDefault(); 
         //comprobacion de que el estado ha cambiado
         var isDifferentFromLastProcessed = _lastProcessedState.IsDefault() || !_lastProcessedState.Equals(_lastServerState);
-        //bool a = _lastProcessedState.IsDefault(), b = !_lastProcessedState.Equals(_lastServerState);
-        //var isDifferentFromLastProcessed = a || b;
-        // Debug.Log($"is default: {_lastProcessedState.IsDefault()}");
-        // Debug.Log($"isLastServerStateValid: {isLastServerStateValid}, isDifferentFromLastProcessed: {isDifferentFromLastProcessed}");
-        
+  
         if (!isLastServerStateValid || !isDifferentFromLastProcessed) return;
         
         
         int bufferIndex = _lastServerState.Tick % BUFFER_SIZE;
         if(bufferIndex - 1 < 0) return; //no hay suficiente info
         
-        // StatePayload rewindState = IsHost ? _serverStateBuffer.Get(bufferIndex - 1) : _lastServerState;
         var clientStateToCheck = _clientStateBuffer.Get(bufferIndex);
         if (clientStateToCheck.IsDefault()) return;
 
@@ -252,8 +228,8 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
         float posError = Vector3.Distance(_lastServerState.Position, clientStateToCheck.Position);
         if (posError > _reconciliationDistanceThreshold)
         {
-            Debug.Log($"!!TICKS: {clientStateToCheck.Tick} en cliente;   {_lastServerState.Tick} en server.");
-            Debug.Log($"jodienda!!: dif de pos: {posError}");
+            // Debug.Log($"disparidad: dif de pos: {posError}");
+            // Debug.Log($"TICKS: {clientStateToCheck.Tick} en cliente;   {_lastServerState.Tick} en server.");
             ReconcileState(_lastServerState);
         }
 
