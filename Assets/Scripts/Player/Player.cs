@@ -15,20 +15,22 @@ public class Player : NetworkBehaviour
     public GameObject car;
     public int CurrentPosition { get; set; }
     public NetworkVariable<int> CurrentLap;
-    
+
     public int StartOrder { get; set; }
     [HideInInspector] public PlayerInfo PlayerInfo { get; private set; }
-    
+
     public enum PlayerColor { Red, Blue, Green }
-    [Serializable] public class CarColor
+    [Serializable]
+    public class CarColor
     {
         public PlayerColor Color;
         public Material Material;
     }
+    public GameplayHUDUI playerHUD;
     public event Action OnRaceFinish;
     public event Action OnLapFinish;
 
-    [field:SerializeField] public CarColor[] CarColors { get; private set; }
+    [field: SerializeField] public CarColor[] CarColors { get; private set; }
 
     public NetworkVariable<float> ArcLength; //esta variable se actualiza cada segundo
     private int _secondsGoingBackwards = 0;
@@ -36,19 +38,19 @@ public class Player : NetworkBehaviour
 
 
     [SerializeField] private TextMeshProUGUI _nameText;
-    
+
     public override string ToString() => Name;
 
     private void Awake()
     {
         CurrentLap = new();
-        ArcLength = new ();
+        ArcLength = new();
     }
 
 
     private void OnDisable()
     {
-        FindObjectOfType<GoalController>().OnPlayerFinish -= OnPlayerFinish;
+        FindObjectOfType<GoalController>().OnPlayerFinish -= OnPlayerFinishClientRpc;
     }
 
 
@@ -61,7 +63,7 @@ public class Player : NetworkBehaviour
             CurrentLap.Value = 0;
             ArcLength.Value = 0f;
             var goal = FindObjectOfType<GoalController>(true);
-            goal.OnPlayerFinish += OnPlayerFinish;
+            goal.OnPlayerFinish += OnPlayerFinishClientRpc;
 
             foreach (var checkpoint in FindObjectsOfType<Checkpoint>())
             {
@@ -77,19 +79,21 @@ public class Player : NetworkBehaviour
 
         var vcam = FindObjectOfType<CinemachineVirtualCamera>();
         GetComponentInChildren<NameTextOrientation>().Cam = vcam.transform;
-        
-        
+
+
         if (IsOwner)
         {
             InputSystem.Instance.SetPlayer(this);
             vcam.Follow = car.transform;
             vcam.LookAt = car.transform;
 
-            var speedo = FindObjectOfType<SpeedometerUI>();
+            var speedmeter = FindObjectOfType<SpeedometerUI>();
             var rb = car.GetComponent<Rigidbody>();
-            speedo.SetPlayerRb(rb);
-            
-            GameManager.Instance.HUD.SubscribeRaceEvents(this);
+            speedmeter.SetPlayerRb(rb);
+
+            playerHUD = FindObjectOfType<GameplayHUDUI>();
+            playerHUD.SubscribeRaceEvents(this);
+
         }
 
 
@@ -104,7 +108,7 @@ public class Player : NetworkBehaviour
 
         SetColorAndName();
 
-        
+
     }
 
     private void SetColorAndName()
@@ -125,36 +129,50 @@ public class Player : NetworkBehaviour
     public void UpdateLapCount()
     {
         CurrentLap.Value++;
-        OnLapFinish?.Invoke();
+        Debug.Log("Lap: " + CurrentLap.Value);
     }
 
-    public void OnPlayerFinish(Player p)
-    {
-        if (p == this)
-        {
-            GetComponent<IInputController>().InputEnabled = false;
-            OnRaceFinish?.Invoke();
-        }
-    }
-    
+
+
     private void OnArcLengthChanged(float previous, float newArc)
     {
-        Debug.Log("arcotal");
+        //Debug.Log("arcotal");
         if (previous > newArc)
         {
-            Debug.Log("arco patras");
+            //Debug.Log("arco patras");
             if (++_secondsGoingBackwards > 3 && !_backwardsTextEnabled)
             {
                 GameManager.Instance.HUD.ShowBackwardsText();
                 _backwardsTextEnabled = true;
             }
         }
-        else if(_backwardsTextEnabled)
+        else if (_backwardsTextEnabled)
         {
-            Debug.Log("arco bien");
+            //Debug.Log("arco bien");
             _secondsGoingBackwards = 0;
             _backwardsTextEnabled = false;
             GameManager.Instance.HUD.HideBackwardsText();
+        }
+    }
+
+    [ClientRpc]
+    public void UpdateLapCountClientRpc()
+    {
+        if (IsOwner)
+        {
+            UpdateLapCount();
+            OnLapFinish?.Invoke();
+        }
+    }
+
+    [ClientRpc]
+    public void OnPlayerFinishClientRpc()
+    {
+
+        if (IsLocalPlayer)
+        {
+            GetComponent<IInputController>().InputEnabled = false;
+            OnRaceFinish?.Invoke();
         }
     }
 }

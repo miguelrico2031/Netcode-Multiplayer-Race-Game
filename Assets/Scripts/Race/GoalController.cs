@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class GoalController : MonoBehaviour
 {
-    public event Action<Player> OnPlayerFinish;
+    public event Action OnPlayerFinish;
 
 
     private void OnTriggerEnter(Collider other)
@@ -30,7 +30,7 @@ public class GoalController : MonoBehaviour
             if (player.CurrentLap.Value > 3)
             {
                 playerWon = true;
-                OnPlayerFinish?.Invoke(player);
+                OnPlayerFinish?.Invoke();
             }
         }
 

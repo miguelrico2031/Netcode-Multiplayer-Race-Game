@@ -238,7 +238,7 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
 
     private void ReconcileState(StatePayload rewindState)
     {
-        Debug.Log("Reconciliando");
+        // Debug.Log("Reconciliando");
         // _rigidbody.position = rewindState.Position;
         // _rigidbody.rotation = rewindState.Rotation;
         _rigidbody.velocity = rewindState.Velocity;
@@ -271,13 +271,13 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
 
     private void MoveToReconcile()
     {
-        Debug.Log("mover para reconciliar");
+        //Debug.Log("mover para reconciliar");
         _rigidbody.position = Vector3.Lerp(_rigidbody.position, _reconcilePos, Time.fixedDeltaTime * _reconcileLerpSpeed);
         _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, _reconcileRot, Time.fixedDeltaTime * _reconcileLerpSpeed);
 
         if (Vector3.Distance(_rigidbody.position, _reconcilePos) > .1f) return;
         _hasToReconcile = false;
-        Debug.Log("Reconciliacion completa");
+        //Debug.Log("Reconciliacion completa");
     }
     
     

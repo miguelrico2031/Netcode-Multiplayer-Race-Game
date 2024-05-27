@@ -29,13 +29,6 @@ public class GameplayHUDUI : MonoBehaviour
 
         GameManager.Instance.RaceController.RaceCountdown.OnValueChanged -= OnCountdown;
 
-        /* Y dirás tu,
-         * por qué está esto puesto aqui en medio????
-         * Pues porque si lo ponia en el start o en el awake
-         * el player aún no está instanciado
-         * y pues da error. Esto mejor en verdad ponerlo en el propio network spawn
-         */
-
         //Activas UI
         gameObject.GetComponent<Canvas>().enabled = true;
         _timer.StartTimer();                                                                        // Interesa que el temporizador empiece despu�s de la cuenta atr�s

@@ -5,7 +5,6 @@ using Unity.Netcode;
 public class SpeedometerUI : MonoBehaviour
 {
 
-
     #region private
 
 
@@ -51,8 +50,6 @@ public class SpeedometerUI : MonoBehaviour
         var vel = (_playerRb.position - _lastPosition).magnitude / Time.fixedDeltaTime;
         _speed = (int) (vel * _speedMultiplier);
         _lastPosition = _playerRb.position;
-
-        //_speed = (int) (_playerRb.velocity.magnitude * _speedMultiplier);
     }
 
     private void UpdateSpeedometerString()

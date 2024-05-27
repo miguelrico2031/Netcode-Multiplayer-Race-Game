@@ -52,8 +52,11 @@ public class GameManager : NetworkBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        NumPlayers = new NetworkVariable<int>();
-        NumPlayers.Value = 0;
+        NumPlayers = new NetworkVariable<int>
+        {
+            Value = 0
+        };
+
         PlayerInfos = new();
         HostInfo = new();
         SelectedCircuit = new();
@@ -152,7 +155,7 @@ public class GameManager : NetworkBehaviour
         }
         
         AddPlayerInfoServerRpc(id, playerName, playerColor); //Llamada al server para actualizar la lista de PlayerInfos
-        
+
         base.OnNetworkSpawn();
     }
     
