@@ -41,6 +41,7 @@ public class TimerUI : MonoBehaviour
     {
         timerActive = false;
     }
+
     public void Hide()
     {
         gameObject.SetActive(false);
@@ -55,6 +56,11 @@ public class TimerUI : MonoBehaviour
 
     private void UpdateTimerString()
     {
-        TimerText.text = _minutes.ToString("00") + ":" + _seconds.ToString("00") + "." + _milsecs.ToString("000");
+        TimerText.text = ToString();
+    }
+
+    override public string ToString()
+    {
+        return _minutes.ToString("00") + ":" + _seconds.ToString("00") + "." + _milsecs.ToString("000");
     }
 }

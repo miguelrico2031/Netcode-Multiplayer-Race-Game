@@ -10,16 +10,17 @@ public class GameplayHUDUI : MonoBehaviour
     [SerializeField] private TimerUI _timer;
     [SerializeField] private PositionIndicatorUI _positionIndicator;
     [SerializeField] private TextMeshProUGUI _backwardsText;
-    [SerializeField] private GameObject _raceResultsLayout;
+    [SerializeField] private ResultsLayout _raceResultsLayout;
 
     private Player _localPlayer;
+    private string[] _lapTimes = new string[3];
 
     // Start is called before the first frame update
     void Start()
     {
         GameManager.Instance.HUD = this;                                                            // Establece la referencia en el GameManager
         GameManager.Instance.RaceController.RaceCountdown.OnValueChanged += OnCountdown;            // Suscribirse al evento de la cuenta regresiva
-        _raceResultsLayout.SetActive(false);                                                        // Desactivar la UI de resultados de carrera
+        _raceResultsLayout.Hide();                                                                  // Desactivar la UI de resultados de carrera
     }
 
     private void OnCountdown(int _, int n)
@@ -34,32 +35,42 @@ public class GameplayHUDUI : MonoBehaviour
          * el player aún no está instanciado
          * y pues da error. Esto mejor en verdad ponerlo en el propio network spawn
          */
-        SubscribeRaceEndEvent();                                                                    // Suscribirse al evento de fin de carrera
 
         //Activas UI
         gameObject.GetComponent<Canvas>().enabled = true;
         _timer.StartTimer();                                                                        // Interesa que el temporizador empiece despu�s de la cuenta atr�s
     }
 
+    public void ShowBackwardsText() => _backwardsText.enabled = true;
+    public void HideBackwardsText() => _backwardsText.enabled = false;
+
     private void ShowRaceResults()
     {
         _timer.StopTimer();
         _timer.Hide();
-        _positionIndicator.Hide();
         _speedometer.Hide();
-        _raceResultsLayout.SetActive(true);
+        _backwardsText.enabled = false;
+        _raceResultsLayout.SetPositionIndicator(_positionIndicator);
+        _positionIndicator.Hide();
+        _raceResultsLayout.Show();
     }
 
-    public void ShowBackwardsText() => _backwardsText.enabled = true;
-    public void HideBackwardsText() => _backwardsText.enabled = false;
+    private void RecordLapTime()
+    {
+        int lapIndex = _localPlayer.CurrentLap.Value - 1;
+        _raceResultsLayout.SaveLapTime(lapIndex, _timer.ToString());
+    }
 
-    private void SubscribeRaceEndEvent()
+    // Llamado desde el Player para suscribirse a los eventos tras el NetworkSpawn
+    public void SubscribeRaceEvents(Player player)
     {
         // Obtener una referencia al jugador local
-        _localPlayer = GameManager.Instance.LocalPlayer;
-        if (_localPlayer != null) Debug.Log("si");
+        _localPlayer = player;
 
         // Suscribirse al evento de fin de carrera
         _localPlayer.OnRaceFinish += ShowRaceResults;
+
+        // Suscribirse al evento de fin de vuelta
+        _localPlayer.OnLapFinish += RecordLapTime;
     }
 }

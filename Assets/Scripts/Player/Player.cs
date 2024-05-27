@@ -26,6 +26,7 @@ public class Player : NetworkBehaviour
         public Material Material;
     }
     public event Action OnRaceFinish;
+    public event Action OnLapFinish;
 
     [field:SerializeField] public CarColor[] CarColors { get; private set; }
 
@@ -87,6 +88,8 @@ public class Player : NetworkBehaviour
             var speedo = FindObjectOfType<SpeedometerUI>();
             var rb = car.GetComponent<Rigidbody>();
             speedo.SetPlayerRb(rb);
+            
+            GameManager.Instance.HUD.SubscribeRaceEvents(this);
         }
 
 
@@ -100,6 +103,7 @@ public class Player : NetworkBehaviour
         }
 
         SetColorAndName();
+
         
     }
 
@@ -116,6 +120,12 @@ public class Player : NetworkBehaviour
         }
 
         Name = _nameText.text = PlayerInfo.Name.Value;
+    }
+
+    public void UpdateLapCount()
+    {
+        CurrentLap.Value++;
+        OnLapFinish?.Invoke();
     }
 
     public void OnPlayerFinish(Player p)

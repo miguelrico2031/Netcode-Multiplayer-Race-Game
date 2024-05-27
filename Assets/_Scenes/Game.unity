@@ -1319,7 +1319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1080035564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,6 +1461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1259672961}
   - component: {fileID: 1259672962}
+  - component: {fileID: 1259672963}
   m_Layer: 5
   m_Name: Results
   m_TagString: Untagged
@@ -1517,6 +1518,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1259672963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259672960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d0326310883454390f2962f694123f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lapTimeText: {fileID: 1733131502}
+  _raceResultsText: {fileID: 424561837}
 --- !u!1 &1292799688
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,7 +2388,7 @@ PrefabInstance:
     - target: {fileID: 7881428695425018833, guid: d44593d4ce43f694a8bcc12a5efb4412, type: 3}
       propertyPath: _raceResultsLayout
       value: 
-      objectReference: {fileID: 1259672960}
+      objectReference: {fileID: 1259672963}
     - target: {fileID: 9196769909226915973, guid: d44593d4ce43f694a8bcc12a5efb4412, type: 3}
       propertyPath: m_CullTransparentMesh
       value: 1
