@@ -41,6 +41,10 @@ public class TimerUI : MonoBehaviour
     {
         timerActive = false;
     }
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 
     private void UpdateTimeValues()
     {

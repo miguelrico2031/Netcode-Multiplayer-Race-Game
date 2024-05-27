@@ -16,8 +16,6 @@ public class PositionIndicatorUI : MonoBehaviour
     private int _playerPosition;
     private int _totalPlayers;
 
-    
-
     #endregion
 
     private void Start()
@@ -33,6 +31,10 @@ public class PositionIndicatorUI : MonoBehaviour
         UpdatePlayerPositionList();
     }
 
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 
     private void UpdatePlayerPositionList()
     {

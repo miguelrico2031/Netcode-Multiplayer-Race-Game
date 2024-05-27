@@ -8,7 +8,7 @@ public class SpeedometerUI : MonoBehaviour
 
     #region private
 
-    
+
     private TextMeshProUGUI _speedometerText;
     private Rigidbody _playerRb = null;
     private float _speed;
@@ -19,15 +19,13 @@ public class SpeedometerUI : MonoBehaviour
     #region config
 
     private readonly float _speedMultiplier = 3.6f;
-    
+
     #endregion
 
     private void Start()
     {
         _speedometerText = GetComponent<TextMeshProUGUI>();
         _speedometerText.text = "000 KM/H";
-
-
     }
 
     private void Update()
@@ -43,6 +41,10 @@ public class SpeedometerUI : MonoBehaviour
         UpdateSpeedValue();
     }
 
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 
     private void UpdateSpeedValue()
     {

@@ -25,6 +25,7 @@ public class Player : NetworkBehaviour
         public PlayerColor Color;
         public Material Material;
     }
+    public event Action OnRaceFinish;
 
     [field:SerializeField] public CarColor[] CarColors { get; private set; }
 
@@ -117,11 +118,12 @@ public class Player : NetworkBehaviour
         Name = _nameText.text = PlayerInfo.Name.Value;
     }
 
-    private void OnPlayerFinish(Player p)
+    public void OnPlayerFinish(Player p)
     {
         if (p == this)
         {
             GetComponent<IInputController>().InputEnabled = false;
+            OnRaceFinish?.Invoke();
         }
     }
     

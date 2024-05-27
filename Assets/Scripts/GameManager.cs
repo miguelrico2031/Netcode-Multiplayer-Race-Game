@@ -21,6 +21,7 @@ public class GameManager : NetworkBehaviour
     public static GameManager Instance { get; private set; }
     public RaceController RaceController { get; set; } = null;
     public GameplayHUDUI HUD { get; set; } = null;
+    public Player LocalPlayer;
 
     //variables de red
     [HideInInspector] public NetworkVariable<int> NumPlayers;
@@ -249,10 +250,10 @@ public class GameManager : NetworkBehaviour
     private void SpawnPlayerServerRpc(ulong id)
     {
        
-        var player = Instantiate(_playerPrefab);
-        player.ID = id;
-        player.StartOrder = tempOrder++;
-        player.GetComponent<NetworkObject>().SpawnAsPlayerObject(id);
+        LocalPlayer = Instantiate(_playerPrefab);
+        LocalPlayer.ID = id;
+        LocalPlayer.StartOrder = tempOrder++;
+        LocalPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(id);
     }
     #endregion
 }
