@@ -130,6 +130,7 @@ public class Player : NetworkBehaviour
     {
         CurrentLap.Value++;
         Debug.Log("Lap: " + CurrentLap.Value);
+        OnLapFinish?.Invoke(); // Esto no va aqui eh q si no se invoca 2 veces en el host luego pero es x testing
     }
 
 

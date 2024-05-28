@@ -70,6 +70,8 @@
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Race\RaceController.cs" />
     <Compile Include="Assets\Scripts\Player\CSP\CircularBuffer.cs" />
+    <Compile Include="Assets\Scripts\Game UI\LapTimeUI.cs" />
+    <Compile Include="Assets\Scripts\Game UI\LapCounterUI.cs" />
     <Compile Include="Assets\Scripts\Player\IInputController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Player\Car\OverturnCheck.cs" />

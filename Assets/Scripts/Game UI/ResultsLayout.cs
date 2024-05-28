@@ -4,17 +4,14 @@ using UnityEngine;
 public class ResultsLayout : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _lapTimeText;
-    [SerializeField] private PositionIndicatorUI _raceResultsText;
+    [SerializeField] private PositionIndicatorUI _raceEndPositionsText;
 
-    private readonly string[] _lapTimes = new string[4];
+    private string[] _lapTimes = new string[3];
+    private string _totalTime;
 
     public void Show()
     {
-        _lapTimeText.text = "";
-        foreach (string lapTime in _lapTimes)
-        {
-            _lapTimeText.text += lapTime + "\n";
-        }
+        LoadLapTimes();
         gameObject.SetActive(true);
     }
 
@@ -25,12 +22,22 @@ public class ResultsLayout : MonoBehaviour
 
     public void SetPositionIndicator(PositionIndicatorUI positionIndicator)
     {
-        _raceResultsText = positionIndicator;
+        _raceEndPositionsText = positionIndicator;
     }
 
-    public void SaveLapTime(int index, string lapTime)
+    public void SetLapTimes(string[] lapTimes, string totalTime)
     {
-        _lapTimes[index] = lapTime;
-        Debug.Log("Lap time recorded: " + lapTime);
+        _lapTimes = lapTimes;
+        _totalTime = totalTime;
+    }
+
+    private void LoadLapTimes()
+    {
+        _lapTimeText.text = "";
+        foreach (string lapTime in _lapTimes)
+        {
+            _lapTimeText.text += lapTime + "\n";
+        }
+        _lapTimeText.text += "----------\n" + _totalTime;
     }
 }

@@ -1,12 +1,13 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class TimerUI : MonoBehaviour
 {
     #region public
 
     public bool timerActive = false;
-    
+
     #endregion
 
     #region private
@@ -14,6 +15,9 @@ public class TimerUI : MonoBehaviour
     private TextMeshProUGUI TimerText;
     private float _seconds, _minutes, _milsecs;
     private float _startTime;
+    private string _totalTime;
+    private float _lastLapTime = 0f;
+    private readonly string[] _lapTimes = new string[3];            // ESTO ESTA HARDCODEADO CUIDADO LUEGO HAY QUE METERLO EN EL GAMEMANAGER O ALGO
 
     #endregion
 
@@ -39,27 +43,63 @@ public class TimerUI : MonoBehaviour
 
     public void StopTimer()
     {
+        _totalTime = ToString();
         timerActive = false;
     }
 
-    public void Hide()
+    public void Hide() => gameObject.SetActive(false);
+
+    public void SaveLapTime(int lapIndex) => _lapTimes[lapIndex] = GetLapTime();            // Guarda el tiempo de la vuelta como string en el array
+
+    public string[] GetLapTimes() => _lapTimes;                                             // Devuelve el array de los tiempos de vuelta
+
+    public string GetTotalTime() => _totalTime.ToString();                                  // Devuelve una string con el tiempo total (o actual) de la carrera
+
+    private float GetCurrentTime() => Time.time - _startTime;                               // Obtiene el tiempo actual de la carrera. Ignora el tiempo de antes de empezar a correr (la cuenta atrás)
+
+    private void UpdateTimeValues() => (_minutes, _seconds, _milsecs) = ConvertTime(GetCurrentTime());  // Actualiza los valores del temporizador
+
+    private void UpdateTimerString() => TimerText.text = ToString();                        // Actualiza el temporizador en la UI
+
+    /*
+     * Obtiene el tiempo de la vuelta actual. Se llama al cruzar la meta por el evento que se triggerea en el Player
+     */
+    private string GetLapTime()
     {
-        gameObject.SetActive(false);
+        float currentTime = GetCurrentTime();                                               // Obtiene el tiempo actual de la carrera
+
+        string lapTimeStr = FormatTime(currentTime - _lastLapTime);                         // Saca la string del tiempo que se ha tardado en dar la vuelta
+        Debug.Log("Lap time recorded: " + lapTimeStr);
+
+        _lastLapTime = currentTime;                                                         // Actualiza el valor para la siguiente vuelta
+        return lapTimeStr;
     }
 
-    private void UpdateTimeValues()
+    /*
+     * Convierte el tiempo en segundos a minutos, segundos y milisegundos
+     * Funciona con una tupla para devolver los 3 valores a la vez
+     */
+    private (int minutes, int seconds, int milsecs) ConvertTime(float time)
     {
-        _minutes = (int) ((Time.time - _startTime) / 60f); 
-        _seconds = (int) ((Time.time - _startTime) % 60f);
-        _milsecs = (int) ((Time.time - _startTime) * 1000f) % 1000;
+        int minutes = (int)(time / 60f);
+        int seconds = (int)(time % 60f);
+        int milsecs = (int)(time * 1000f) % 1000;
+        return (minutes, seconds, milsecs);
     }
 
-    private void UpdateTimerString()
+    /*
+     * Formatea el tiempo pasado como float en el parámetro en minutos, segundos y milisegundos
+     */
+    private string FormatTime(float time)
     {
-        TimerText.text = ToString();
+        var (minutes, seconds, milsecs) = ConvertTime(time);
+        return minutes.ToString("00") + ":" + seconds.ToString("00") + "." + milsecs.ToString("000");
     }
 
-    override public string ToString()
+    /*
+     * Devuelve el tiempo actual como una string formateada
+     */
+    public override string ToString()
     {
         return _minutes.ToString("00") + ":" + _seconds.ToString("00") + "." + _milsecs.ToString("000");
     }
