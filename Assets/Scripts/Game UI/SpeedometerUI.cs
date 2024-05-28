@@ -1,7 +1,10 @@
 using UnityEngine;
 using TMPro;
-using Unity.Netcode;
 
+/// <summary>
+/// Clase que gestiona el acelerómetro del coche de cada jugador.
+/// Funciona mediante la velocidad del rigidbody del jugador.
+/// </summary>
 public class SpeedometerUI : MonoBehaviour
 {
 
@@ -17,7 +20,7 @@ public class SpeedometerUI : MonoBehaviour
 
     #region config
 
-    private readonly float _speedMultiplier = 3.6f;
+    private readonly float _speedMultiplier = 3.6f;                                         // Para que los valores del acelerómetro sean más "realistas"
 
     #endregion
 
@@ -33,10 +36,12 @@ public class SpeedometerUI : MonoBehaviour
         UpdateSpeedometerString();
     }
 
+    /*
+     * Se actualiza el valor de la velocidad. Se llama en FixedUpdate para que el valor sea más preciso y se evite el jitter en el texto.
+     */
     public void FixedUpdate()
     {
         if (_playerRb is null) return;
-
         UpdateSpeedValue();
     }
 
@@ -45,6 +50,9 @@ public class SpeedometerUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /*
+     * Actualiza el valor de la velocidad en función de la posición del rigidbody del jugador.
+     */
     private void UpdateSpeedValue()
     {
         var vel = (_playerRb.position - _lastPosition).magnitude / Time.fixedDeltaTime;
@@ -52,12 +60,18 @@ public class SpeedometerUI : MonoBehaviour
         _lastPosition = _playerRb.position;
     }
 
+    /*
+     * Actualiza el texto del velocímetro.
+     */
     private void UpdateSpeedometerString()
     {
         _speedometerText.text = _speed.ToString("000") + " KM/H";
     }
 
-    public void SetPlayerRb(Rigidbody rb)           // Se llama desde Player para cada jugador (Owner)
+    /* 
+     * Se llama desde Player para cada jugador (Owner)
+     */
+    public void SetPlayerRb(Rigidbody rb)           
     {
         _playerRb = rb;
         _lastPosition = rb.position;

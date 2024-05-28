@@ -99,6 +99,7 @@ public class MainMenuUI : MonoBehaviour
         }
         else                                                                                //cuando ya se ha elegido circuito, el boton de host crea la sala
         {
+            _backBtn.gameObject.SetActive(false);                                           // no se puede retroceder mientras se está creando la sala
             LoadHostLobbyScreen();
         }
     }
@@ -142,12 +143,14 @@ public class MainMenuUI : MonoBehaviour
             _joinCodeText.text = joinCode;                                                  //muestra el codigo de la sala por pantalla
             _joinCodeText.gameObject.SetActive(true);
             _playersLog.SetActive(true);
+            _backBtn.gameObject.SetActive(true);                                            // vuelve a activar el boton de retroceso para salir de la sala
         },
         () =>
         {
             _errorPanel.SetActive(true);
             Debug.LogWarning("Ruina Host no creado");
         });
+
     }
 
     private void LoadRoomSearchScreen()

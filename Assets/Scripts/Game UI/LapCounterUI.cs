@@ -1,21 +1,24 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Clase que gestiona el contador de vueltas en el HUD durante la carrera.
+/// </summary>
 public class LapCounterUI : MonoBehaviour
 {
     #region private
 
     private TextMeshProUGUI _lapCounterText;
-    private int _currentLap;
-    private int _totalLaps;
-    private Player _localPlayer;
+    private int _currentLap;                                    // Vuelta actual
+    private int _totalLaps;                                     // Vueltas totales
+    private Player _localPlayer;                                // Referencia al jugador local
 
     #endregion
 
     public void LinkPlayer(Player player)
     {
         _localPlayer = player;
-        _localPlayer.OnLapFinish += UpdateLapCounter;
+        _localPlayer.OnLapFinish += UpdateLapCounter;           // Se suscribe al evento que se dispara al completar una vuelta
     }
 
     public void Start()
@@ -30,7 +33,7 @@ public class LapCounterUI : MonoBehaviour
 
     public void UpdateLapCounter()
     {
-        _currentLap = _localPlayer.CurrentLap.Value;
+        _currentLap = _localPlayer.CurrentLap.Value;            // Toma el valor de la vuelta actual del jugador. Se puede hacer con contador pero esto es más seguro porque lo toma del servidor.
         _currentLap = _currentLap == 0 ? 1 : _currentLap;       // Para que no se muestre 0/3 al empezar la carrera
         _lapCounterText.text = $"{_currentLap}/{_totalLaps}";
     }

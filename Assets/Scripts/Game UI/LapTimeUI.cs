@@ -2,6 +2,9 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Clase que gestiona el texto de tiempo de vuelta en pantalla en el HUD.
+/// </summary>
 public class LapTimeUI : MonoBehaviour
 {
     private TextMeshProUGUI _lapTimeText;
@@ -15,6 +18,9 @@ public class LapTimeUI : MonoBehaviour
         _lapTimeText.text = "";
     }
 
+    /*
+     * Obtiene la string con la información del tiempo de vuelta y la muestra por pantalla
+     */
     public void ShowLapTime(string lapTime)
     {
         _lapTime = lapTime;
@@ -22,7 +28,7 @@ public class LapTimeUI : MonoBehaviour
     }
 
     /*
-     * Muestra el tiempo de vuelta en pantalla parpadeando
+     * Hace que el texto parpadee en pantalla
      */
     private IEnumerator FlashLapTime()
     {

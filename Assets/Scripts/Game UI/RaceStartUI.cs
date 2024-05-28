@@ -1,10 +1,12 @@
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic;
 
+/// <summary>
+/// Clase que gestiona la UI de inicio de la carrera.
+/// Dispone de un Overlay a modo de pantalla de carga.
+/// También se encarga de mostrar la cuenta atrás de la carrera.
+/// </summary>
 public class RaceStartUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _raceStartText;
@@ -16,11 +18,14 @@ public class RaceStartUI : MonoBehaviour
         GameManager.Instance.RaceController.RaceCountdown.OnValueChanged += OnCountdown;
     }
 
+    /*
+     * Método del texto de la cuenta atrás de la carrera.
+     */
     private void OnCountdown(int _, int n)
     {
         if (n != 0)
         {
-            _coverPanel.SetActive(false);
+            _coverPanel.SetActive(false);                               // Desactiva el panel de carga.
             _raceStartText.gameObject.SetActive(true);
             _raceStartText.text = $"{n}";
             return;
@@ -30,6 +35,11 @@ public class RaceStartUI : MonoBehaviour
         StartCoroutine(HideUI());
     }
 
+    /*
+     * Método que oculta el panel de carga y el texto de la cuenta atrás.
+     * Activa el HUD de la carrera.
+     * También elimina el evento de la cuenta atrás.
+     */
     private IEnumerator HideUI()
     {
         GameManager.Instance.RaceController.RaceCountdown.OnValueChanged -= OnCountdown;

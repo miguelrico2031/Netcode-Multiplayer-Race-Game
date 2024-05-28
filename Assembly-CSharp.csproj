@@ -61,7 +61,6 @@
     <Compile Include="Assets\Scripts\Game UI\GameplayHUDUI.cs" />
     <Compile Include="Assets\Scripts\Player\Car\ICarController.cs" />
     <Compile Include="Assets\Scripts\Player\CSP\InputControllerCSP.cs" />
-    <Compile Include="Assets\Scripts\Game UI\ResultsLayout.cs" />
     <Compile Include="Assets\Scripts\Game UI\SpeedometerUI.cs" />
     <Compile Include="Assets\Scripts\Race\Checkpoint.cs" />
     <Compile Include="Assets\Scripts\InputSystem.cs" />
@@ -69,6 +68,7 @@
     <Compile Include="Assets\Scripts\Player\Car\AxleInfo.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Race\RaceController.cs" />
+    <Compile Include="Assets\Scripts\Game UI\ResultsLayoutUI.cs" />
     <Compile Include="Assets\Scripts\Player\CSP\CircularBuffer.cs" />
     <Compile Include="Assets\Scripts\Game UI\LapTimeUI.cs" />
     <Compile Include="Assets\Scripts\Game UI\LapCounterUI.cs" />

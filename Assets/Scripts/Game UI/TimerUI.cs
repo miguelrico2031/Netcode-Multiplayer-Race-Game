@@ -1,7 +1,11 @@
 using UnityEngine;
 using TMPro;
-using System;
 
+/// <summary>
+/// Clase que gestiona el tiempo de la carrera.
+/// Se encarga de guardar el tiempo total de la carrera y los tiempos de vuelta.
+/// Dispone de métodos para formatear y mostrar el tiempo en pantalla.
+/// </summary>
 public class TimerUI : MonoBehaviour
 {
     #region public
