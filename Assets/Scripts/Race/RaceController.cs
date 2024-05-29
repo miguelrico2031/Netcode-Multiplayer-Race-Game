@@ -128,6 +128,11 @@ public class RaceController : NetworkBehaviour
         
         if (_players.Count == GameManager.Instance.NumPlayers.Value && StartRaceCor is null)
             StartRaceCor = StartCoroutine(StartRaceCountdown());
+
+        if (GameManager.Instance.TrainingMode && StartRaceCor is null)
+        {
+            StartRaceCor = StartCoroutine(StartRaceCountdown());
+        }
     }
 
     private IEnumerator StartRaceCountdown()

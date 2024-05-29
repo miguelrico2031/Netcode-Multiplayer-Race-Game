@@ -4,6 +4,7 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class MainMenuUI : MonoBehaviour
 
 
     [SerializeField] private TextMeshProUGUI _joinCodeText, _nameText, _playersLogText;
-    [SerializeField] private Button _hostBtn, _joinBtn, _startBtn, _carSelectLeftBtn, _carSelectRightBtn, _backBtn;
+    [SerializeField] private Button _hostBtn, _joinBtn, _startBtn, _carSelectLeftBtn, _carSelectRightBtn, _backBtn, _trainBtn, _onlineBtn;
     [SerializeField] private GameObject _circuitSelect, _joinInput, _nameInput, _playersLog, _errorPanel;
     [SerializeField] private MeshRenderer _carRenderer;
     [SerializeField] private Player.CarColor[] _carColors;
@@ -57,6 +58,7 @@ public class MainMenuUI : MonoBehaviour
         _carRenderer.materials = _carMaterials;
         PlayerColor = _carColors[_colorIdx].Color;
     }
+
     private void InitializeCircuitSelection()
     {
         SelectedCircuit = (Circuit)_circuits.GetValue(0);
@@ -91,6 +93,28 @@ public class MainMenuUI : MonoBehaviour
     //metodo llamado por el input de poner el codigo de la sala
     public void SetJoinCode(string code) => _joinCode = code;
 
+    public void Online()
+    {
+        _trainBtn.gameObject.SetActive(false);
+        _onlineBtn.gameObject.SetActive(false);
+
+        _backBtn.gameObject.SetActive(true);
+
+        _hostBtn.gameObject.SetActive(true);
+        _joinBtn.gameObject.SetActive(true);
+    }
+
+    public void Train()
+    {
+        _trainBtn.gameObject.SetActive(false);
+        _onlineBtn.gameObject.SetActive(false);
+
+        LoadCircuitSelectScreen();
+
+        GameManager.Instance.TrainingMode = true;
+        _startBtn.gameObject.SetActive(true);
+    }
+
     public void Host()
     {
         if (!_circuitSelect.activeSelf)                                                     //la primera vez que se le da al boton de host aparece la UI de elegir circuito
@@ -118,6 +142,11 @@ public class MainMenuUI : MonoBehaviour
 
     public void SetPlayerReady()
     {
+        if (GameManager.Instance.TrainingMode)
+        {
+            LoadTrainingMode();
+        }
+
         GameManager.Instance.SetPlayerReadyServerRpc(NetworkManager.Singleton.LocalClientId);
     }
 
@@ -127,6 +156,7 @@ public class MainMenuUI : MonoBehaviour
         _backBtn.gameObject.SetActive(true);
         _circuitSelect.SetActive(true);
         //se posiciona el boton de host donde estaba el de join para abrir espacio para el selector de circuito
+        // para el modo entrenamiento no afecta porque está oculto
         _hostBtn.GetComponent<RectTransform>().position = _joinBtn.GetComponent<RectTransform>().position;
     }
 
@@ -179,6 +209,28 @@ public class MainMenuUI : MonoBehaviour
             _errorPanel.SetActive(true);
             Debug.LogWarning("Ruina no te pudiste unir a la sala");
         });
+    }
+
+    private void LoadTrainingMode()
+    {
+        // Modo entrenamiento y tal
+        Debug.Log("Modo entrenamiento");
+
+        SetFinalNameText();
+        DisableCarButtons();
+
+        _circuitSelect.SetActive(false);
+        GameManager.Instance.StartHost(joinCode =>                                          //callback que se ejecuta cuando termine de crearse el host
+        {
+            _joinCodeText.text = "";                                                        // no hay codigo
+            GameManager.Instance.SetPlayerReadyServerRpc(NetworkManager.Singleton.LocalClientId);
+        },
+        () =>
+        {
+            _errorPanel.SetActive(true);
+            Debug.LogWarning("Ruina Host no creado");
+        });
+
     }
 
     private void SetFinalNameText()                                                         //desactiva el input para no cambiarse el nombre más
@@ -239,8 +291,10 @@ public class MainMenuUI : MonoBehaviour
     private void RestoreMainMenuUI()
     {
         _hostBtn.GetComponent<RectTransform>().position = _hostBtnOriginalPos;
-        _joinBtn.gameObject.SetActive(true);
-        _hostBtn.gameObject.SetActive(true);
+        _joinBtn.gameObject.SetActive(false);
+        _hostBtn.gameObject.SetActive(false);
+        _trainBtn.gameObject.SetActive(true);
+        _onlineBtn.gameObject.SetActive(true);
         _nameInput.SetActive(true);
         _carSelectLeftBtn.gameObject.SetActive(true);
         _carSelectRightBtn.gameObject.SetActive(true);

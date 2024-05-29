@@ -29,6 +29,7 @@ public class GameManager : NetworkBehaviour
     [HideInInspector] public NetworkVariable<Circuit> SelectedCircuit;
     public NetworkList<PlayerInfo> PlayerInfos;
     
+    public bool TrainingMode { get; set; } = false;
     
     [SerializeField] private Player _playerPrefab;
     
@@ -37,6 +38,8 @@ public class GameManager : NetworkBehaviour
     private MainMenuUI _mainMenuUI;
     private readonly HashSet<ulong> _readyPlayers = new();
     private bool _disconnectedLocally = false;
+
+    
 
     
     
@@ -70,17 +73,18 @@ public class GameManager : NetworkBehaviour
         _networkManager.OnClientStopped += OnClientStopped;
         _networkManager.ConnectionApprovalCallback += ApprovalCheck;
         _mainMenuUI = FindObjectOfType<MainMenuUI>();
+
     }
     
     private void OnDisable()
     {
 
     }
-    
-    
+
+
     #endregion
 
-    
+
     #region Main Menu Network Methods
     public async void StartHost(Action<string> sucessCallback, Action failCallback)
     {
@@ -132,9 +136,12 @@ public class GameManager : NetworkBehaviour
     
     private void LoadGameScene()
     { //carga la escena del juego
+        if (TrainingMode)
+            _networkManager.SceneManager.LoadScene("Training", LoadSceneMode.Single);
+        //else if (IsHost)
         _networkManager.SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
-    
+
     #endregion
     
     
@@ -226,15 +233,20 @@ public class GameManager : NetworkBehaviour
 
     [ServerRpc(RequireOwnership = false)]
     public void SetPlayerReadyServerRpc(ulong id)
-    { //si los jugadores listos para jugar son la mayoria (y hay al menos 2) empieza el juego
+    { 
         _readyPlayers.Add(id);
-        // if (NumPlayers.Value > 1 && _readyPlayers.Count > NumPlayers.Value / 2f) 
+
+        if (TrainingMode) LoadGameScene();          // En el modo entrenamiento no se espera a nadie y comienza el juego.
+
+        //si los jugadores listos para jugar son la mayoria (y hay al menos 2) empieza el juego
+        // else if (NumPlayers.Value > 1 && _readyPlayers.Count > NumPlayers.Value / 2f) 
+        else
             LoadGameScene();
     }
-    
+
     #endregion
-    
-    
+
+
     #region Game Methods
 
 

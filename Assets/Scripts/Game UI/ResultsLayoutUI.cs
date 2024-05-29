@@ -9,7 +9,10 @@ using UnityEngine;
 public class ResultsLayoutUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _lapTimeText;
-    [SerializeField] private PositionIndicatorUI _raceEndPositionsText;             // No se está usando pero se deja por si acaso
+
+    #nullable enable
+    [SerializeField] private PositionIndicatorUI? _raceEndPositionsText;            // No se está usando pero se deja por si acaso
+    #nullable disable
 
     private string[] _lapTimes = new string[3];                                     // Almacena como strings el tiempo de cada vuelta
     private string _totalTime;                                                      // Almacena como string el tiempo total de la carrera
@@ -26,10 +29,11 @@ public class ResultsLayoutUI : MonoBehaviour
     }
 
     /*
-     * Establece la referencia al indicador de posición. Por ahora, toma el mismo objeto usado en la UI de la carrera-
+     * Establece la referencia al indicador de posición. Por ahora, toma el mismo objeto usado en la UI de la carrera.
      */ 
     public void SetPositionIndicator(PositionIndicatorUI positionIndicator)
     {
+        if (GameManager.Instance.TrainingMode) return;                             // No se muestra en el modo de entrenamiento
         _raceEndPositionsText = positionIndicator;
     }
 

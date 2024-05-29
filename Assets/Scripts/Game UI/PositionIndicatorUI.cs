@@ -17,14 +17,17 @@ public class PositionIndicatorUI : MonoBehaviour
 
     private void Start()
     {
+
         _positionIndicatorText = GetComponent<TextMeshProUGUI>();
-        _positionIndicatorText.text = "N/A";
+        _positionIndicatorText.text = "Training Mode";
 
         _totalPlayers = GetTotalPlayers();
     }
 
     private void Update()
     {
+        if (GameManager.Instance.TrainingMode) return;                           // No se muestra en el modo de entrenamiento, así que no se actualiza
+
         UpdatePlayerPositionList();
     }
 
