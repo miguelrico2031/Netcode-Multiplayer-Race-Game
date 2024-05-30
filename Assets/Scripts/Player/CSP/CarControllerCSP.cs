@@ -250,23 +250,23 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
         
         //_clientStateBuffer.Add(rewindState, rewindState.Tick);
         return;
-        if (!rewindState.Equals(_lastServerState))
-        {
-            Debug.LogError("No coincide el estado restaurado con el ultimo del servidor. " +
-                           "Puede ser porque se este ejecutando ReconcileState en el Host.");
-            return;
-        }
+        //if (!rewindState.Equals(_lastServerState))
+        //{
+        //    Debug.LogError("No coincide el estado restaurado con el ultimo del servidor. " +
+        //                   "Puede ser porque se este ejecutando ReconcileState en el Host.");
+        //    return;
+        //}
         
-        //reprocesar todos los inputs que han pasado desde el estado que hemos corregido
+        ////reprocesar todos los inputs que han pasado desde el estado que hemos corregido
 
-        int tickToReplay = _lastServerState.Tick;
-        while (tickToReplay < _timer.Tick) //hasta llegar al tick actual
-        {
-            int bufferIndex = tickToReplay % BUFFER_SIZE;
-            var statePayload = ProcessMovement(_clientInputBuffer.Get(bufferIndex));
-            _clientStateBuffer.Add(statePayload, bufferIndex);
-            tickToReplay++;
-        }
+        //int tickToReplay = _lastServerState.Tick;
+        //while (tickToReplay < _timer.Tick) //hasta llegar al tick actual
+        //{
+        //    int bufferIndex = tickToReplay % BUFFER_SIZE;
+        //    var statePayload = ProcessMovement(_clientInputBuffer.Get(bufferIndex));
+        //    _clientStateBuffer.Add(statePayload, bufferIndex);
+        //    tickToReplay++;
+        //}
     }
 
     private void MoveToReconcile()

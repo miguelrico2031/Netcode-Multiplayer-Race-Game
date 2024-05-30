@@ -28,7 +28,6 @@ public class Player : NetworkBehaviour
     }
     public GameplayHUDUI playerHUD;
     public event Action OnRaceFinish;
-    public event Action OnLapFinish;
 
     [field: SerializeField] public CarColor[] CarColors { get; private set; }
 
@@ -126,12 +125,6 @@ public class Player : NetworkBehaviour
         Name = _nameText.text = PlayerInfo.Name.Value;
     }
 
-    public void UpdateLapCount()
-    {
-        CurrentLap.Value++;
-        Debug.Log("Lap: " + CurrentLap.Value);
-        OnLapFinish?.Invoke(); // Esto no va aqui eh q si no se invoca 2 veces en el host luego pero es x testing
-    }
 
 
 
@@ -156,24 +149,12 @@ public class Player : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void UpdateLapCountClientRpc()
-    {
-        if (IsOwner)
-        {
-            UpdateLapCount();
-            OnLapFinish?.Invoke();
-        }
-    }
+
 
     [ClientRpc]
     public void OnPlayerFinishClientRpc()
     {
-
-        if (IsLocalPlayer)
-        {
-            GetComponent<IInputController>().InputEnabled = false;
-            OnRaceFinish?.Invoke();
-        }
+        GetComponent<IInputController>().InputEnabled = false;
+        OnRaceFinish?.Invoke();
     }
 }

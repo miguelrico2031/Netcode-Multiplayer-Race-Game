@@ -6,8 +6,19 @@ using UnityEngine.Serialization;
 
 public class InputControllerCSP : NetworkBehaviour, IInputController
 {
-    public bool InputEnabled { get => _inputEnabled.Value; set => _inputEnabled.Value = value; }
-    public NetworkVariable<bool> _inputEnabled;
+    public bool InputEnabled 
+    {
+        get => _serverInputEnabled.Value && _clientInputEnabled;
+        set
+        {
+            if (!IsSpawned) return;
+            if(IsHost) _serverInputEnabled.Value = value;
+            else if (IsOwner) _clientInputEnabled = value;
+        }
+    }
+    public NetworkVariable<bool> _serverInputEnabled;
+
+    private bool _clientInputEnabled = true;
     
     private Player _player;
     private ICarController _car;
@@ -15,7 +26,7 @@ public class InputControllerCSP : NetworkBehaviour, IInputController
 
     private void Awake()
     {
-        _inputEnabled = new() {Value = false};
+        _serverInputEnabled = new() {Value = false};
     }
 
     private void Start()

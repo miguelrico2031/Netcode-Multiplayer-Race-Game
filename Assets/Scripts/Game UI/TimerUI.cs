@@ -21,7 +21,6 @@ public class TimerUI : MonoBehaviour
     private float _startTime;
     private string _totalTime;
     private float _lastLapTime = 0f;
-    private readonly string[] _lapTimes = new string[3];            // ESTO ESTA HARDCODEADO CUIDADO LUEGO HAY QUE METERLO EN EL GAMEMANAGER O ALGO
 
     #endregion
 
@@ -53,10 +52,6 @@ public class TimerUI : MonoBehaviour
 
     public void Hide() => gameObject.SetActive(false);
 
-    public void SaveLapTime(int lapIndex) => _lapTimes[lapIndex] = GetLapTime();            // Guarda el tiempo de la vuelta como string en el array
-
-    public string[] GetLapTimes() => _lapTimes;                                             // Devuelve el array de los tiempos de vuelta
-
     public string GetTotalTime() => _totalTime.ToString();                                  // Devuelve una string con el tiempo total (o actual) de la carrera
 
     private float GetCurrentTime() => Time.time - _startTime;                               // Obtiene el tiempo actual de la carrera. Ignora el tiempo de antes de empezar a correr (la cuenta atrás)
@@ -68,7 +63,7 @@ public class TimerUI : MonoBehaviour
     /*
      * Obtiene el tiempo de la vuelta actual. Se llama al cruzar la meta por el evento que se triggerea en el Player
      */
-    private string GetLapTime()
+    public string RecordLapTime()
     {
         float currentTime = GetCurrentTime();                                               // Obtiene el tiempo actual de la carrera
 
@@ -76,6 +71,10 @@ public class TimerUI : MonoBehaviour
         Debug.Log("Lap time recorded: " + lapTimeStr);
 
         _lastLapTime = currentTime;                                                         // Actualiza el valor para la siguiente vuelta
+        
+        //tienes una ref al rewsults layout ui, la cual tiene un alista
+        FindAnyObjectByType<ResultsLayoutUI>(FindObjectsInactive.Include).LapTimes.Add(lapTimeStr);
+       
         return lapTimeStr;
     }
 

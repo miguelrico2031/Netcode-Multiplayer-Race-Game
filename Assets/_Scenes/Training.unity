@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 1abfa762337c4e54389f5cd4aa9c2419, type: 3}
   m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
+  m_UIInputModule: {fileID: 450040127}
   m_DeviceLostEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1583,7 +1583,7 @@ MonoBehaviour:
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 936762459}
 --- !u!4 &966146601
 Transform:
   m_ObjectHideFlags: 0
@@ -1885,7 +1885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.33333334}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2975,6 +2975,7 @@ GameObject:
   - component: {fileID: 2906134053606037942}
   - component: {fileID: 1835815182340337189}
   - component: {fileID: 7881428697167637841}
+  - component: {fileID: 7881428697167637842}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -3002,6 +3003,23 @@ MonoBehaviour:
   _backwardsText: {fileID: 6168513418086724667}
   _raceResultsLayout: {fileID: 1586054634}
   _menuButton: {fileID: 3122277469169519951}
+--- !u!114 &7881428697167637842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7758071400548955714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &8593600711044153147
 MonoBehaviour:
   m_ObjectHideFlags: 0

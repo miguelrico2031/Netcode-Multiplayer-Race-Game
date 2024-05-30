@@ -11,7 +11,6 @@ public class PositionIndicatorUI : MonoBehaviour
     #region private
 
     private TextMeshProUGUI _positionIndicatorText;                                      
-    private int _totalPlayers;                                                  // SIN USAR. Número total de jugadores en la carrera.
 
     #endregion
 
@@ -21,14 +20,14 @@ public class PositionIndicatorUI : MonoBehaviour
         _positionIndicatorText = GetComponent<TextMeshProUGUI>();
         _positionIndicatorText.text = "Training Mode";
 
-        _totalPlayers = GetTotalPlayers();
     }
 
     private void Update()
     {
         if (GameManager.Instance.TrainingMode) return;                           // No se muestra en el modo de entrenamiento, así que no se actualiza
 
-        UpdatePlayerPositionList();
+        GetPositionsList();
+        //UpdatePlayerPositionList();
     }
 
     public void Hide()
@@ -37,25 +36,19 @@ public class PositionIndicatorUI : MonoBehaviour
     }
 
     /*
-     * Actualiza la lista de posiciones de los jugadores
-     */
-    private void UpdatePlayerPositionList()
+     * Obtiene la lista de posiciones de los jugadores en orden
+     */  
+    public string GetPositionsList()
     {
-        _positionIndicatorText.text = "";
+        _positionIndicatorText.text = "";                                       // La vacía para actualizarla en el update
         var st = GameManager.Instance.RaceController.PlayerOrder.Value.Value;   // Toma la lista de los jugadores ordenados desde el RaceController 
         var stsplit = st.Split(";");
         foreach (var p in stsplit)
         {
-            if(p == "") continue;
+            if (p == "") continue;
             _positionIndicatorText.text += $"{p}\n";                            // Muestra cada jugador como una línea separada
         }
-    }
-    
-    /* SIN USAR
-     * Obtiene el número total de jugadores en la carrera
-     */
-    private int GetTotalPlayers()
-    {
-        return GameManager.Instance.NumPlayers.Value;
+
+        return _positionIndicatorText.text;
     }
 }

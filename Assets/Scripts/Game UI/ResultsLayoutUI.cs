@@ -1,5 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.Linq;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Clase que gestiona el Overlay de los resultados de la carrera.
@@ -8,19 +12,19 @@ using UnityEngine;
 /// </summary>
 public class ResultsLayoutUI : MonoBehaviour
 {
+    public List<string> LapTimes = new();
+
+
+
     [SerializeField] private TextMeshProUGUI _lapTimeText;
+    [SerializeField] private TextMeshProUGUI _raceEndPositionsText;                
 
-    #nullable enable
-    [SerializeField] private PositionIndicatorUI? _raceEndPositionsText;            // No se está usando pero se deja por si acaso
-    #nullable disable
-
-    private string[] _lapTimes = new string[3];                                     // Almacena como strings el tiempo de cada vuelta
     private string _totalTime;                                                      // Almacena como string el tiempo total de la carrera
 
     public void Show()
     {
-        LoadLapTimes();                                                             // Obtiene los valores de los tiempos
         gameObject.SetActive(true);
+        LoadLapTimesValues();                                                       // Obtiene los valores de los tiempos
     }
 
     public void Hide()
@@ -31,29 +35,41 @@ public class ResultsLayoutUI : MonoBehaviour
     /*
      * Establece la referencia al indicador de posición. Por ahora, toma el mismo objeto usado en la UI de la carrera.
      */ 
-    public void SetPositionIndicator(PositionIndicatorUI positionIndicator)
+    public void SetPositionIndicator(PositionIndicatorUI racerPositions)
     {
-        if (GameManager.Instance.TrainingMode) return;                             // No se muestra en el modo de entrenamiento
-        _raceEndPositionsText = positionIndicator;
+        if (GameManager.Instance.TrainingMode) return;                              // No se muestra en el modo de entrenamiento
+        
+        _raceEndPositionsText.text = racerPositions.GetPositionsList();             // Crea una copia de la lista de los jugadores pero "inmutable"
     }
 
     /*
      * Toma los valores de tiempo de vuelta y tiempo final de la clase TimerUI y los muestra en pantalla
      */
-    public void SetLapTimes(string[] lapTimes, string totalTime)
+    public void SetLapTimes(string totalTime)
     {
-        _lapTimes = lapTimes;
         _totalTime = totalTime;
     }
 
     /*
      * Formatea y muestra los tiempos de vuelta en pantalla
      */
-    private void LoadLapTimes()
+    private void LoadLapTimesValues()
     {
+        StartCoroutine(Wait());
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return null;
         _lapTimeText.text = "";
-        foreach (string lapTime in _lapTimes)
+        for (int i = 0; i < 3; i++)
         {
+            string lapTime = "DNF";
+            if (LapTimes.Any())
+            {
+                lapTime = LapTimes[0];
+                LapTimes.RemoveAt(0);
+            }
             _lapTimeText.text += lapTime + "\n";
         }
         _lapTimeText.text += "----------\n" + _totalTime;

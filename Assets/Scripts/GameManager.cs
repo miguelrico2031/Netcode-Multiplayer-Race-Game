@@ -55,6 +55,7 @@ public class GameManager : NetworkBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+
         NumPlayers = new NetworkVariable<int>
         {
             Value = 0
@@ -210,8 +211,20 @@ public class GameManager : NetworkBehaviour
     {
         _disconnectedLocally = true;
         _networkManager.Shutdown();
+        
+        if (NetworkManager.Singleton != null)
+        {
+            Destroy(NetworkManager.Singleton.gameObject);
+        }
+        //Destroy(_networkManager.gameObject);
+
+        GetComponent<NetworkObject>().Despawn(true);
+
+        //PlayerInfos = new();
+
+
     }
-    
+
     private void ReturnToMainMenu()
     {
         _networkManager.OnClientConnectedCallback -= OnClientConnected;

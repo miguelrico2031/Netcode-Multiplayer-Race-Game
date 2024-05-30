@@ -26,7 +26,7 @@ public class GoalController : MonoBehaviour
         
         if (allChecked && rightdirection)
         {
-            player.UpdateLapCount();
+            player.CurrentLap.Value++;
             if (player.CurrentLap.Value > 3)
             {
                 playerWon = true;

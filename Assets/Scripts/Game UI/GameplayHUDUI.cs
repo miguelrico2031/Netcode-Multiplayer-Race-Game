@@ -57,8 +57,8 @@ public class GameplayHUDUI : MonoBehaviour
     {
         HideRaceUI();
         _timer.StopTimer();
-        _raceResultsLayout.SetPositionIndicator(_positionIndicator);                                // CAMBIAR A UNA LISTA FIJA QUE NO PERMITA MODIFICACIONES UNA VEZ EL JUGADOR LLEGA A LA META
-        _raceResultsLayout.SetLapTimes(_timer.GetLapTimes(), _timer.GetTotalTime());
+        _raceResultsLayout.SetPositionIndicator(_positionIndicator);                                
+        _raceResultsLayout.SetLapTimes( _timer.GetTotalTime());
 
         _raceResultsLayout.Show();
     }
@@ -66,22 +66,14 @@ public class GameplayHUDUI : MonoBehaviour
     /*
      * Registra el tiempo de vuelta en el temporizador y lo muestra en pantalla
      */
-    private void RecordLapTime()
+    private void UpdateLapTime(int previous, int current)
     {
-        int lapIndex = _localPlayer.CurrentLap.Value - 2;
+        if (_localPlayer.CurrentLap.Value <= 1 || _localPlayer.CurrentLap.Value > 4) return;
 
-        // CUIDADO CON EL NÚMERO HARDCODEADO. DEBERÍA SER CONSTANTE EN EL GAMEMANAGER
-        if (lapIndex == -1 || lapIndex > 3) return;                                                 // Omite la vez en la que se cruza la meta nada mas salir, y la meta al finalizar la carrera
+        var lapTime = _timer.RecordLapTime();
 
-        _timer.SaveLapTime(lapIndex);
-
-        ShowLapTime(lapIndex);
+        _lapTime.ShowLapTime(lapTime);
     }
-
-    /*
-     * Muestra el tiempo de vuelta en pantalla con unos parpadeos
-     */
-    private void ShowLapTime(int lapIndex) => _lapTime.ShowLapTime(_timer.GetLapTimes()[lapIndex]);
 
     /* 
      * Llamado desde el Player para suscribirse a los eventos tras el NetworkSpawn
@@ -92,7 +84,7 @@ public class GameplayHUDUI : MonoBehaviour
 
         _localPlayer.OnRaceFinish += ShowRaceResults;                                               // Suscribirse al evento de fin de carrera
 
-        _localPlayer.OnLapFinish += RecordLapTime;                                                  // Suscribirse al evento de fin de vuelta
+        _localPlayer.CurrentLap.OnValueChanged += UpdateLapTime;                                    // Suscribirse al evento de fin de vuelta
 
         _lapCounter.LinkPlayer(player);                                                             // Enlazar el contador de vueltas con el jugador al que está trackeando
     }
@@ -111,9 +103,9 @@ public class GameplayHUDUI : MonoBehaviour
 
     public void BackToMenu()
     {
-        Debug.Log("Salir");
-        GameManager.Instance.Disconnect();
         GetComponent<Canvas>().gameObject.SetActive(false);
-        SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
+        GameManager.Instance.Disconnect();
+        GameManager.Instance.NetworkManager.SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
+        //SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 }
