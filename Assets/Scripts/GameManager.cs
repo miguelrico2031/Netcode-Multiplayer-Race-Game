@@ -216,6 +216,7 @@ public class GameManager : NetworkBehaviour
         {
             Destroy(NetworkManager.Singleton.gameObject);
         }
+
         //Destroy(_networkManager.gameObject);
 
         GetComponent<NetworkObject>().Despawn(true);
