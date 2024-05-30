@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // Acuerdate de que la UI se activa y desactiva con el componente Canvas del GameObject
 
@@ -16,8 +18,9 @@ public class GameplayHUDUI : MonoBehaviour
     [SerializeField] private PositionIndicatorUI _positionIndicator;
     [SerializeField] private LapCounterUI _lapCounter;
     [SerializeField] private LapTimeUI _lapTime;
-    [SerializeField] private ResultsLayoutUI _raceResultsLayout;
     [SerializeField] private TextMeshProUGUI _backwardsText;
+    [SerializeField] private ResultsLayoutUI _raceResultsLayout;
+    [SerializeField] private Button _menuButton;
 
     private Player _localPlayer;                                                                    // Referencia al jugador local
 
@@ -104,5 +107,13 @@ public class GameplayHUDUI : MonoBehaviour
         _lapCounter.Hide();
         _positionIndicator.Hide();
         _backwardsText.enabled = false;
+    }
+
+    public void BackToMenu()
+    {
+        Debug.Log("Salir");
+        GameManager.Instance.Disconnect();
+        GetComponent<Canvas>().gameObject.SetActive(false);
+        SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 }

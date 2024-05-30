@@ -78,75 +78,278 @@
      <Compile Include="Assets/Scripts/Player/PlayerInfo.cs" />
      <Compile Include="Assets/Scripts/Game UI/RaceStartUI.cs" />
      <Folder Include="Assets" />
+     <None Include="Library/PackageCache/com.unity.settings-manager@2.0.1/package.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Strata/Ridge.hlsl" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/UI/Spritesheet/greenSheet.xml" />
+     <Folder Include="Library/PackageCache/com.unity.test-framework@1.1.33" />
      <None Include="Assets/UI/License.txt" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Strata/Voronoi.hlsl" />
+     <Folder Include="Library/PackageCache/com.unity.sysroot@2.0.10" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Generated/NoiseFillFbm.shader" />
      <Folder Include="Assets/TextMesh Pro/Sprites" />
      <Folder Include="Assets/Models/Cars/Materials" />
      <Folder Include="Assets/Prefabs/Props" />
+     <None Include="Library/PackageCache/com.unity.inputsystem@1.6.3/package.json" />
+     <None Include="Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections.LowLevel.ILSupport/README.txt" />
+     <None Include="Library/PackageCache/com.unity.inputsystem@1.6.3/ValidationConfig.json" />
+     <Folder Include="Library/PackageCache/com.unity.sysroot@2.0.10/Tests" />
+     <None Include="Library/PackageCache/com.unity.cinemachine@2.9.7/ValidationExceptions.json" />
      <Folder Include="Assets/TextMesh Pro/Resources/Sprite Assets" />
      <Folder Include="Assets/Models/CircuitElements" />
+     <Folder Include="Library/PackageCache/com.unity.testtools.codecoverage@1.2.4/lib/ReportGenerator" />
+     <None Include="Library/PackageCache/com.unity.ext.nunit@1.0.6/package.json" />
+     <None Include="Library/PackageCache/com.unity.services.relay@1.1.0/package.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Implementation/RidgeImpl.hlsl" />
+     <Folder Include="Library/PackageCache/com.unity.ide.rider@3.0.21/Rider" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Implementation/BillowImpl.hlsl" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/None/Voronoi.hlsl" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/TwistHeight.shader" />
+     <Folder Include="Library/PackageCache/com.unity.cinemachine@2.9.7" />
+     <Folder Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Editor Resources" />
      <None Include="Assets/Circuits/REDME.txt" />
+     <Folder Include="Library/PackageCache/com.unity.inputsystem@1.6.3/Tests" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
+     <None Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.visualscripting@1.8.0/Graphics" />
+     <Folder Include="Library/PackageCache/com.unity.sysroot.linux-x86_64@2.0.9" />
      <Folder Include="Assets/Resources/Racing" />
+     <None Include="Library/PackageCache/com.unity.sysroot.linux-x86_64@2.0.9/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.burst@1.8.4/Tests" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4" />
+     <Folder Include="Library/PackageCache/com.unity.cinemachine@2.9.7/Gizmos" />
+     <None Include="Library/PackageCache/com.unity.timeline@1.7.6/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/TexelValidity.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Strata/Perlin.hlsl" />
+     <Folder Include="Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections.LowLevel.ILSupport" />
      <Folder Include="Assets/TextMesh Pro/Resources/Fonts &amp; Materials" />
+     <Folder Include="Library/PackageCache/com.unity.collections@1.2.4" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Fbm/Value.hlsl" />
+     <Folder Include="Library/PackageCache/com.unity.visualscripting@1.8.0" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib" />
+     <None Include="Library/PackageCache/com.unity.ide.visualstudio@2.0.18/ValidationConfig.json" />
+     <Folder Include="Library/PackageCache/com.unity.ext.nunit@1.0.6/net35" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
+     <None Include="Library/PackageCache/com.unity.mathematics@1.2.6/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.performance.profile-analyzer@1.2.2" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/None" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Strata" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Fbm/Voronoi.hlsl" />
+     <None Include="Library/PackageCache/com.unity.sysroot@2.0.10/package.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseFill.shader" />
+     <Folder Include="Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.1/Runtime/AOT" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
      <Folder Include="Assets/TextMesh Pro/Resources" />
+     <None Include="Library/PackageCache/com.unity.services.authentication@2.5.0/ValidationExceptions.json" />
+     <None Include="Library/PackageCache/com.unity.visualscripting@1.8.0/package.json" />
+     <None Include="Library/PackageCache/com.unity.editorcoroutines@1.0.0/package.json" />
+     <None Include="Library/PackageCache/com.unity.timeline@1.7.6/ValidationExceptions.json" />
+     <None Include="Library/PackageCache/com.unity.collab-proxy@2.3.1/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.timeline@1.7.6" />
      <None Include="Assets/Circuits/LICENSE.txt" />
+     <Folder Include="Library/PackageCache/com.unity.netcode.gameobjects@1.8.1" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization/HDRP" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Implementation/PerlinImpl.hlsl" />
      <Folder Include="Assets/Scripts/Player" />
+     <None Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/PackageConversionData.json" />
+     <Folder Include="Library/PackageCache/com.unity.ext.nunit@1.0.6" />
+     <Folder Include="Library/PackageCache/com.unity.services.authentication@2.5.0" />
      <Folder Include="Assets/Circuits" />
+     <Folder Include="Library/PackageCache/com.unity.burst@1.8.4" />
+     <Folder Include="Library/PackageCache/com.unity.cinemachine@2.9.7/Tests" />
+     <None Include="Library/PackageCache/com.unity.ide.visualstudio@2.0.18/package.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/SedimentSplat.shader" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Fbm/Perlin.hlsl" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Noise.hlsl" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization/URP/URP_TerrainVisualizationLitPass.hlsl" />
+     <None Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/ValidationExceptions.json" />
+     <Folder Include="Library/PackageCache/com.unity.netcode.gameobjects@1.8.1/Tests" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/package.json" />
      <Folder Include="Assets/TextMesh Pro" />
+     <Folder Include="Library/PackageCache/com.unity.nuget.mono-cecil@1.11.4/Tests" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Tests" />
+     <Folder Include="Library/PackageCache/com.unity.services.qos@1.3.0" />
+     <Folder Include="Library/PackageCache/com.unity.transport@1.4.0" />
      <Folder Include="Assets/Scripts/Main Menu" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/PinchHeight.shader" />
+     <None Include="Library/PackageCache/com.unity.ide.rider@3.0.21/package.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Generated/NoiseFillNone.shader" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Templates" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/SmoothHeight.shader" />
+     <None Include="Library/PackageCache/com.unity.test-framework@1.1.33/package.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/SharpenPeaks.shader" />
+     <Folder Include="Library/PackageCache/com.unity.netcode.gameobjects@1.8.1/TestHelpers" />
+     <Folder Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Scripts" />
      <None Include="Assets/UI/Spritesheet/redSheet.xml" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Fbm" />
+     <Folder Include="Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/NoiseCommon.hlsl" />
+     <None Include="Library/PackageCache/com.unity.nuget.mono-cecil@1.11.4/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.toolchain.linux-x86_64@2.0.9" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization/URP/URP_TerrainVisualizationInput.hlsl" />
+     <Folder Include="Library/PackageCache/com.unity.sysroot.linux-x86_64@2.0.9/Tests" />
+     <Folder Include="Library/PackageCache/com.unity.testtools.codecoverage@1.2.4" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/None/Billow.hlsl" />
+     <None Include="Library/PackageCache/com.unity.transport@1.4.0/ValidationExceptions.json" />
+     <None Include="Library/PackageCache/com.unity.performance.profile-analyzer@1.2.2/package.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/PaintAspect.shader" />
+     <Folder Include="Library/PackageCache/com.unity.inputsystem@1.6.3" />
      <Folder Include="Assets/Scripts/Player/CSP" />
+     <Folder Include="Library/PackageCache/com.unity.services.relay@1.1.0" />
+     <None Include="Library/PackageCache/com.unity.toolchain.linux-x86_64@2.0.9/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.nuget.mono-cecil@1.11.4" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Generated" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
+     <None Include="Library/PackageCache/com.unity.services.core@1.12.4/package.json" />
+     <None Include="Library/PackageCache/com.unity.visualscripting@1.8.0/ValidationExceptions.json" />
      <None Include="Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt" />
      <Folder Include="Assets/Scripts/Race" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/TerrainToolHeightBlit.shader" />
      <Folder Include="Assets/UI/Vector" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" />
+     <Folder Include="Library/PackageCache/com.unity.settings-manager@2.0.1" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF.shader" />
+     <None Include="Library/PackageCache/com.unity.ide.visualstudio@2.0.18/ValidationExceptions.json" />
+     <None Include="Library/PackageCache/com.unity.services.qos@1.3.0/ValidationExceptions.json" />
+     <None Include="Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.1/link.xml" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/SimpleHeightBlend.shader" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/ExampleAssets/NoiseSettings" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/SmudgeHeight.shader" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/ContrastHeight.shader" />
+     <None Include="Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.1/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Editor Resources/Textures" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/SetExactHeight.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/DetailScatter.shader" />
+     <Folder Include="Library/PackageCache/com.unity.editorcoroutines@1.0.0" />
+     <None Include="Library/PackageCache/com.unity.services.qos@1.3.0/package.json" />
+     <None Include="Library/PackageCache/com.unity.toolchain.linux-x86_64@2.0.9/ValidationConfig.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/PaintMaterialBrushPreview.shader" />
      <Folder Include="Assets/UI/PNG" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" />
+     <None Include="Library/PackageCache/com.unity.cinemachine@2.9.7/license.txt" />
+     <None Include="Library/PackageCache/com.unity.transport@1.4.0/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.services.core@1.12.4/Runtime" />
      <Folder Include="Assets/_Scenes" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/MeshUtility.shader" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Implementation" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/ExampleAssets" />
      <Folder Include="Assets/Models/CircuitElements/Materials" />
+     <Folder Include="Library/PackageCache/com.unity.mathematics@1.2.6" />
+     <Folder Include="Library/PackageCache/com.unity.performance.profile-analyzer@1.2.2/Tests" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" />
+     <None Include="Library/PackageCache/com.unity.inputsystem@1.6.3/ValidationExceptions.json" />
      <Folder Include="Assets/TextMesh Pro/Shaders" />
+     <Folder Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Editor Resources/Gizmos" />
      <Folder Include="Assets/Scripts/Player/Car" />
+     <Folder Include="Library/PackageCache/com.unity.collab-proxy@2.3.1" />
+     <None Include="Library/PackageCache/com.unity.netcode.gameobjects@1.8.1/ValidationExceptions.json" />
      <Folder Include="Assets/TextMesh Pro/Resources/Style Sheets" />
+     <Folder Include="Library/PackageCache/com.unity.toolchain.linux-x86_64@2.0.9/Tests" />
      <Folder Include="Assets/Textures" />
      <Folder Include="Assets/TextMesh Pro/Fonts" />
+     <None Include="Library/PackageCache/com.unity.cinemachine@2.9.7/package.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/TerraceErosion.shader" />
+     <None Include="Library/PackageCache/com.unity.testtools.codecoverage@1.2.4/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.textmeshpro@3.0.8" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/TerrainTools.hlsl" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/BrushPreview.shader" />
+     <Folder Include="Library/PackageCache/com.unity.ide.rider@3.0.21" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/NoisePreview.shader" />
      <Folder Include="Assets/Materials/Car" />
      <Folder Include="Assets/Materials" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Generated/NoiseFillStrata.shader" />
+     <Folder Include="Library/PackageCache/com.unity.transport@1.4.0/Analyzers" />
+     <None Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Editor Resources/Shaders/TMP_SDF_SSD.cginc" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization/HDRP/HDRP_TerrainVisualizationTemplate.hlsl" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/None/Value.hlsl" />
+     <None Include="Library/PackageCache/com.unity.collab-proxy@2.3.1/ValidationConfig.json" />
      <Folder Include="Assets/Prefabs" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/PaintConcavity.shader" />
+     <Folder Include="Library/PackageCache/com.unity.ide.vscode@1.2.5" />
      <Folder Include="Assets/Shaders" />
+     <Folder Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Tests" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization/Builtin" />
      <Folder Include="Assets/Materials/Checkpoints" />
+     <Folder Include="Library/PackageCache/com.unity.services.core@1.12.4" />
+     <None Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Editor Resources/Shaders/TMP_Properties.cginc" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/CloneBrush.shader" />
+     <None Include="Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.1/Runtime/AOT/Newtonsoft.Json.xml" />
      <None Include="Assets/UI/Spritesheet/yellowSheet.xml" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization/URP" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Fbm/Billow.hlsl" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Generated/NoiseBlitNone.shader" />
      <Folder Include="Assets/Resources" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/NoiseImpl.hlsl" />
+     <None Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Editor Resources/Shaders/TMP_SDF Internal Editor.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Strata/Billow.hlsl" />
      <Folder Include="Assets/UI" />
+     <Folder Include="Library/PackageCache/com.unity.cinemachine@2.9.7/Presets" />
      <Folder Include="Assets/Scripts" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
+     <None Include="Library/PackageCache/com.unity.services.authentication@2.5.0/package.json" />
      <Folder Include="Assets/Models" />
+     <Folder Include="Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib" />
+     <None Include="Library/PackageCache/com.unity.ide.vscode@1.2.5/ValidationExceptions.json" />
+     <None Include="Library/PackageCache/com.unity.visualscripting@1.8.0/ValidationConfig.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Generated/NoiseBlitStrata.shader" />
+     <None Include="Library/PackageCache/com.unity.netcode.gameobjects@1.8.1/package.json" />
      <Folder Include="Assets/Terrain" />
+     <Folder Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Editor Resources/Shaders" />
+     <Folder Include="Library/PackageCache/com.unity.settings-manager@2.0.1/Content" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/PaintHeight.shader" />
      <Folder Include="Assets/Prefabs/CircuitParts" />
+     <Folder Include="Library/PackageCache/com.unity.ide.visualstudio@2.0.18" />
+     <None Include="Library/PackageCache/com.unity.collections@1.2.4/package.json" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
      <Folder Include="Assets/Input" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Preview.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Strata/Value.hlsl" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/None/Ridge.hlsl" />
+     <None Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/PackageConversionData_Assets.json" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" />
+     <Folder Include="Library/PackageCache/com.unity.transport@1.4.0/Tests" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/None/Perlin.hlsl" />
+     <None Include="Library/PackageCache/com.unity.mathematics@1.2.6/ValidationExceptions.json" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization/Builtin/BLT_TerrainVisualizationCommon.cginc" />
+     <Folder Include="Library/PackageCache/com.unity.textmeshpro@3.0.8/Package Resources" />
      <None Include="Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Generated/NoiseBlitFbm.shader" />
+     <Folder Include="Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.1" />
      <Folder Include="Assets/Scripts/Game UI" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Fbm/Ridge.hlsl" />
      <Folder Include="Assets/TextMesh Pro/Documentation" />
+     <Folder Include="Library/PackageCache/com.unity.testtools.codecoverage@1.2.4/lib" />
+     <Folder Include="Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.1/Runtime" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/PaintTexture.shader" />
+     <None Include="Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.1/Runtime/Newtonsoft.Json.xml" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseHeightTool.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Implementation/ValueImpl.hlsl" />
+     <None Include="Library/PackageCache/com.unity.collections@1.2.4/ValidationExceptions.json" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization/HDRP/HDRP_TerrainVisualizationData.hlsl" />
+     <None Include="Library/PackageCache/com.unity.burst@1.8.4/Unity.Burst.Unsafe.xml" />
      <Folder Include="Assets/UI/Spritesheet" />
      <None Include="Assets/UI/Spritesheet/greySheet.xml" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Implementation/VoronoiImpl.hlsl" />
+     <None Include="Library/PackageCache/com.unity.burst@1.8.4/package.json" />
      <Folder Include="Assets/Models/Cars" />
+     <Folder Include="Library/PackageCache/com.unity.cinemachine@2.9.7/Presets/Noise" />
      <None Include="Assets/TextMesh Pro/Sprites/EmojiOne.json" />
+     <Folder Include="Library/PackageCache/com.unity.settings-manager@2.0.1/Tests" />
      <None Include="Assets/UI/Spritesheet/blueSheet.xml" />
+     <Folder Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/NoiseLib/Templates" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/SlopeFlatten.shader" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Sprite.shader" />
+     <None Include="Library/PackageCache/com.unity.terrain-tools@5.0.4/Shaders/Visualization/Builtin/BLT_TerrainVisualization.shader" />
+     <None Include="Library/PackageCache/com.unity.ide.vscode@1.2.5/package.json" />
      <Reference Include="UnityEngine">
      <HintPath>/home/ezequiel/Unity/Hub/Editor/2022.3.2f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
@@ -774,158 +977,205 @@
      <Reference Include="mscorlib">
      <HintPath>/home/ezequiel/Unity/Hub/Editor/2022.3.2f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll</HintPath>
      </Reference>
-     <Reference Include="com.unity.cinemachine.editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Burst.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Services.Core">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Services.Core.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Networking.Transport">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Networking.Transport.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Rider.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.2D.Sprite.Editor">
      <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualScripting.Flow">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Netcode.Components">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Netcode.Components.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mathematics.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Netcode.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Netcode.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Services.Core.Environments">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Services.Core.Environments.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Services.Relay">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Services.Relay.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Performance.Profile-Analyzer.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TestTools.CodeCoverage.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Collections">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Netcode.Runtime">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Netcode.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Netcode.Editor.PackageChecker">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Netcode.Editor.PackageChecker.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TextMeshPro">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Services.Core.Analytics">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Services.Core.Analytics.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VSCode.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Sysroot.Linux_x86_64">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.EditorCoroutines.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Toolchain.Linux-x86_64">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TerrainTools.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.TerrainTools.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.PlasticSCM.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Burst">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Timeline.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualScripting.Shared.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TerrainTools">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.TerrainTools.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualStudio.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.UI">
      <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualScripting.Core">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VisualScripting.Core.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualScripting.Core.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Services.QoS">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Services.QoS.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEngine.UI">
      <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualScripting.Flow.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Timeline">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.InputSystem">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.InputSystem.ForUI">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.SysrootPackage.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Services.Authentication">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Services.Authentication.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualScripting.State.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mathematics">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Networking.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.Networking.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TextMeshPro.Editor">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualScripting.State">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
-     </Reference>
-     <Reference Include="Cinemachine">
-     <HintPath>/home/ezequiel/Documents/Unity Projects/practica-entornos/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
-     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
+      <Project>{4a20fd6f-a749-93ed-433a-6a521f475972}</Project>
+      <Name>com.unity.cinemachine.editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.Editor.csproj">
+      <Project>{a4e7e5e8-ce84-b671-0852-3004d174b067}</Project>
+      <Name>Unity.Burst.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.csproj">
+      <Project>{a8b5d785-dd7d-6b88-bd63-d8ccfa7c27cf}</Project>
+      <Name>Unity.Services.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Networking.Transport.csproj">
+      <Project>{e3506cfa-76ed-c3e6-01e3-7bf8bf28d8ca}</Project>
+      <Name>Unity.Networking.Transport</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Rider.Editor.csproj">
+      <Project>{7e769f72-07ed-64e0-cfd2-457f7e1765a0}</Project>
+      <Name>Unity.Rider.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Flow.csproj">
+      <Project>{2b949e26-030c-5620-7292-e533e0284a66}</Project>
+      <Name>Unity.VisualScripting.Flow</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Netcode.Components.csproj">
+      <Project>{d96be62e-3294-b335-3adc-4d34822925c3}</Project>
+      <Name>Unity.Netcode.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.Editor.csproj">
+      <Project>{85739314-b323-01fe-f880-8e6a2d8f408d}</Project>
+      <Name>Unity.Mathematics.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.csproj">
+      <Project>{5430e962-4a0a-16de-384d-e5614a89f593}</Project>
+      <Name>Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Netcode.Editor.csproj">
+      <Project>{144f6d3c-b0d6-306b-d785-407f2deca1f8}</Project>
+      <Name>Unity.Netcode.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.Environments.csproj">
+      <Project>{1e6e1e18-b60b-1e22-1ffc-27f110902745}</Project>
+      <Name>Unity.Services.Core.Environments</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Relay.csproj">
+      <Project>{c5723de8-6690-fe3d-a5eb-cc59fe996a98}</Project>
+      <Name>Unity.Services.Relay</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Performance.Profile-Analyzer.Editor.csproj">
+      <Project>{87f5eae3-662f-f087-7764-1fbfff597ed8}</Project>
+      <Name>Unity.Performance.Profile-Analyzer.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.csproj">
+      <Project>{6be59d67-bdd5-a786-8527-24cffeeae1c4}</Project>
+      <Name>Unity.TestTools.CodeCoverage.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Collections.csproj">
+      <Project>{98ba507e-0fae-63d4-6c6e-912851f42976}</Project>
+      <Name>Unity.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Netcode.Runtime.csproj">
+      <Project>{021ac98b-d443-9474-c6b5-00e918ee67d7}</Project>
+      <Name>Unity.Netcode.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Netcode.Editor.PackageChecker.csproj">
+      <Project>{f937d120-9d72-aa72-9646-cc539bec447d}</Project>
+      <Name>Unity.Netcode.Editor.PackageChecker</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.csproj">
+      <Project>{e7f8b921-8ec6-dbbb-4b2a-121fe27327e6}</Project>
+      <Name>Unity.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.Analytics.csproj">
+      <Project>{1f555e9f-ae66-ba70-434c-8955e136a6ee}</Project>
+      <Name>Unity.Services.Core.Analytics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VSCode.Editor.csproj">
+      <Project>{a7a4ea66-475e-9889-8b12-7108c21ef1fd}</Project>
+      <Name>Unity.VSCode.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Sysroot.Linux_x86_64.csproj">
+      <Project>{19d9f705-d406-5375-bb39-9a0133b8806b}</Project>
+      <Name>Unity.Sysroot.Linux_x86_64</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.EditorCoroutines.Editor.csproj">
+      <Project>{8f7c9ccf-1349-cca4-d6c7-4ba9b50baf18}</Project>
+      <Name>Unity.EditorCoroutines.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Toolchain.Linux-x86_64.csproj">
+      <Project>{9c3105af-ae8f-6f9c-775d-b344ab26f368}</Project>
+      <Name>Unity.Toolchain.Linux-x86_64</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TerrainTools.Editor.csproj">
+      <Project>{c2fc46d7-0883-3126-a9ae-fcf03ecaa6b3}</Project>
+      <Name>Unity.TerrainTools.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
+      <Project>{fbfb2293-c939-7f83-dd3f-1aa4848759f8}</Project>
+      <Name>Unity.PlasticSCM.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{ecd748bb-af6e-d315-242f-53e8f7472053}</Project>
+      <Name>Unity.Burst</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Timeline.Editor.csproj">
+      <Project>{438ace86-afb7-f01b-5691-6223b8da16f4}</Project>
+      <Name>Unity.Timeline.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Shared.Editor.csproj">
+      <Project>{4bc84ae4-d561-6d6d-0e24-ecc01aa3ac2f}</Project>
+      <Name>Unity.VisualScripting.Shared.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TerrainTools.csproj">
+      <Project>{5442ed83-2362-cad9-b5ac-64230c6c6746}</Project>
+      <Name>Unity.TerrainTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
+      <Project>{d8e917fd-d37f-5ea6-d738-aad95f9eb7d2}</Project>
+      <Name>Unity.VisualStudio.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Core.csproj">
+      <Project>{2b09d81a-007b-3668-bf2e-cfc4704a4bba}</Project>
+      <Name>Unity.VisualScripting.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Core.Editor.csproj">
+      <Project>{94d1f841-1996-f8a5-ea24-53b0a98b1c6f}</Project>
+      <Name>Unity.VisualScripting.Core.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.QoS.csproj">
+      <Project>{fcee5c6b-3f7b-441e-721f-4b16d9d7aa39}</Project>
+      <Name>Unity.Services.QoS</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Flow.Editor.csproj">
+      <Project>{aba359d7-670d-33d5-4dc0-35b7d3aac3b3}</Project>
+      <Name>Unity.VisualScripting.Flow.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Timeline.csproj">
+      <Project>{38ced24f-cc02-0292-4bcd-90c9fdb0bb9f}</Project>
+      <Name>Unity.Timeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.InputSystem.csproj">
+      <Project>{c6ed04df-44a5-fc3d-73c9-f9493bbda20f}</Project>
+      <Name>Unity.InputSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.InputSystem.ForUI.csproj">
+      <Project>{3f943110-f050-dca9-0984-aa9287d8a95c}</Project>
+      <Name>Unity.InputSystem.ForUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.SettingsProvider.Editor.csproj">
+      <Project>{8f6a83e5-9e72-9dd6-7051-87b0e59df8e4}</Project>
+      <Name>Unity.VisualScripting.SettingsProvider.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.SysrootPackage.Editor.csproj">
+      <Project>{46b20557-fc7d-f70a-bec1-4ee9d5fab318}</Project>
+      <Name>Unity.SysrootPackage.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.csproj">
+      <Project>{66777646-47ac-8cae-99d1-09ec41f22d5f}</Project>
+      <Name>Unity.TestTools.CodeCoverage.Editor.OpenCover.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Authentication.csproj">
+      <Project>{0e5ccdc0-99e2-575a-9e0a-bb8f5dd52527}</Project>
+      <Name>Unity.Services.Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.State.Editor.csproj">
+      <Project>{b3c26018-08c9-4f0b-3309-c9b54e85f13d}</Project>
+      <Name>Unity.VisualScripting.State.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.csproj">
+      <Project>{50c09609-67c8-76d1-530c-6a0de27feb77}</Project>
+      <Name>Unity.Mathematics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Networking.Editor.csproj">
+      <Project>{0d447405-4f43-6301-277e-15deb6c42d40}</Project>
+      <Name>Unity.Networking.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
+      <Project>{6df924f3-d002-7905-11da-21ff678d7849}</Project>
+      <Name>Unity.TextMeshPro.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.State.csproj">
+      <Project>{8c5e2221-0cfc-53e3-8599-f553c580cce8}</Project>
+      <Name>Unity.VisualScripting.State</Name>
+    </ProjectReference>
+    <ProjectReference Include="Cinemachine.csproj">
+      <Project>{c6f7bd75-3577-0347-1212-b37f13a78e99}</Project>
+      <Name>Cinemachine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
