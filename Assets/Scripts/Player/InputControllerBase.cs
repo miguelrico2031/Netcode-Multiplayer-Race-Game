@@ -6,11 +6,28 @@ using UnityEngine.Serialization;
 
 public class InputControllerBase : NetworkBehaviour, IInputController
 {
-    public bool InputEnabled { get; set; }
-    
-    
+    public bool InputEnabled
+    {
+        get => _serverInputEnabled.Value && _clientInputEnabled;
+        set
+        {
+            if (!IsSpawned) return;
+            if (IsHost) _serverInputEnabled.Value = value;
+            else if (IsOwner) _clientInputEnabled = value;
+        }
+    }
+    public NetworkVariable<bool> _serverInputEnabled;
+
+    private bool _clientInputEnabled = true;
+
+
     private Player _player;
     private ICarController _car;
+
+    public void Awake()
+    {
+        _serverInputEnabled = new() { Value = false};
+    }
 
     private void Start()
     {
@@ -49,6 +66,11 @@ public class InputControllerBase : NetworkBehaviour, IInputController
     {
         if(context.started) OnAttackServerRpc();
     }
+
+    public void OnReset(InputAction.CallbackContext context)
+    {
+        OnResetServerRpc();
+    }
     
     
     //no se si hace falta que sea public
@@ -71,5 +93,12 @@ public class InputControllerBase : NetworkBehaviour, IInputController
     private void OnAttackServerRpc()
     {
         if (!InputEnabled) return;
+    }
+
+    [ServerRpc]
+    private void OnResetServerRpc()
+    {
+        if (InputEnabled)
+            _car.RepositionCar(() => { });
     }
 }

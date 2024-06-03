@@ -225,6 +225,15 @@ public class CarControllerBase : NetworkBehaviour, ICarController
 
     #endregion
 
+    public void ShowOverturnText()
+    {
+        ShowOverturnTextClientRpc();
+    }
+
+    public void HideOverturnText()
+    {
+        HideOverturnTextClientRpc();
+    }
 
     public void RepositionCar(Action onRepositionedCallback)
     {
@@ -253,6 +262,20 @@ public class CarControllerBase : NetworkBehaviour, ICarController
     {
         _rigidbody.position = pos;
         _rigidbody.rotation = rot;
+    }
+
+    [ClientRpc]
+    private void ShowOverturnTextClientRpc()
+    {
+        if (IsOwner)
+            GameManager.Instance.HUD.ShowResetText();
+    }
+
+    [ClientRpc]
+    private void HideOverturnTextClientRpc()
+    {
+        if (IsOwner)
+            GameManager.Instance.HUD.HideResetText();
     }
 
 }

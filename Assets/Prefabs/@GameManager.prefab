@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1240474618
-  InScenePlacedSourceGlobalObjectIdHash: 1224647905
+  GlobalObjectIdHash: 57651445
+  InScenePlacedSourceGlobalObjectIdHash: 1949774399
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -67,8 +67,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxConnections>k__BackingField: 5
+  LocalPlayer: {fileID: 0}
   NumPlayers:
     m_InternalValue: 0
   SelectedCircuit:
     m_InternalValue: 0
-  _playerPrefab: {fileID: 5877741144707485896, guid: 8cb0f194315f5874797b12dac7f6cdfb, type: 3}
+  _playerPrefab: {fileID: 4116422496449682083, guid: 932f05fc1a6f7e741b063057ee6c78ca, type: 3}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class OverturnCheck : MonoBehaviour
     private ICarController _carController;
     private Vector3 _lastPos;
     private int _checksSincePosChanged = 0;
+    private bool _resetMessageSent = false;
     
     private void Start()
     {
@@ -55,13 +57,21 @@ public class OverturnCheck : MonoBehaviour
         {
             _lastPos = transform.position;
             _checksSincePosChanged = 0;
+            if(_resetMessageSent)
+            {
+                _resetMessageSent = false;
+                _carController.HideOverturnText();
+            }
         }
 
-        // else if (++_checksSincePosChanged >= 6)
-        // {
-        //     _checksSincePosChanged = 0;
-        //     HandleOverturn();
-        // }
+        else if (++_checksSincePosChanged >= 5)
+        {
+            if (!_resetMessageSent)
+            {
+                _resetMessageSent = true;
+                _carController.ShowOverturnText();
+            }
+        }
     }
 
     private void HandleOverturn()
@@ -69,5 +79,9 @@ public class OverturnCheck : MonoBehaviour
         _doChecking = false;
         _checksSincePosChanged = 0;
         _carController.RepositionCar(() => _doChecking = true);
+        _carController.HideOverturnText();
+        _resetMessageSent = false;
     }
+
+    
 }

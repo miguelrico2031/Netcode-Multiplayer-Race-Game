@@ -122,6 +122,16 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
         }
     }
 
+    public override void OnNetworkDespawn()
+    {
+    
+        if (IsHost && !IsOwner)
+        {
+            Destroy(_serverClientPos);
+        }
+        base.OnNetworkDespawn();
+    }
+
     public void Update()
     {
         Speed = _rigidbody.velocity.magnitude;
@@ -505,6 +515,16 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
         SetCarTransformInClientRpc(pos, rot);
     }
 
+    public void ShowOverturnText()
+    {
+        ShowOverturnTextClientRpc();
+    }
+    
+    public void HideOverturnText()
+    {
+        HideOverturnTextClientRpc();
+    }
+
     [ClientRpc(RequireOwnership = false)]
     private void SetCarTransformInClientRpc(Vector3 pos, Quaternion rot)
     {
@@ -534,5 +554,19 @@ public class CarControllerCSP : NetworkBehaviour, ICarController
         _rigidbody.rotation = rot;
         _rigidbody.velocity = vel;
         _rigidbody.angularVelocity = angularVel;
+    }
+
+    [ClientRpc]
+    private void ShowOverturnTextClientRpc()
+    {
+        if (IsOwner)
+            GameManager.Instance.HUD.ShowResetText();
+    }
+    
+    [ClientRpc]
+    private void HideOverturnTextClientRpc()
+    {
+        if (IsOwner)
+            GameManager.Instance.HUD.HideResetText();
     }
 }

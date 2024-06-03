@@ -52,6 +52,17 @@ public class Player : NetworkBehaviour
         FindObjectOfType<GoalController>().OnPlayerFinish -= OnPlayerFinishClientRpc;
     }
 
+    public override void OnNetworkDespawn()
+    {
+        ////FindObjectOfType<GoalController>().OnPlayerFinish -= OnPlayerFinishClientRpc;
+        
+        base.OnNetworkDespawn();
+
+        if (IsHost)
+        {
+            GameManager.Instance.RaceController.RemovePlayer(this);
+        }
+    }
 
     public override void OnNetworkSpawn()
     {

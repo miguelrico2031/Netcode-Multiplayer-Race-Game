@@ -12,7 +12,7 @@ public class InputSystem : MonoBehaviour
     private Player _player;
     
     
-    private InputAction _move, _brake, _attack;
+    private InputAction _move, _brake, _attack, _reset;
 
 
     private void Awake()
@@ -46,5 +46,9 @@ public class InputSystem : MonoBehaviour
         _attack = playerInput.actions["Attack"];
         _attack.performed += input.OnAttack;
         _attack.Enable();
+
+        _reset = playerInput.actions["Reset"];
+        _reset.performed += input.OnReset;
+        _reset.Enable();
     }
 }

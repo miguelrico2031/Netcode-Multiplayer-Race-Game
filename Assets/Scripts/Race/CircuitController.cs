@@ -125,5 +125,5 @@ public class CircuitController : MonoBehaviour
 
 public enum Circuit
 {
-    Nascar, Oasis, OwlPlains, Rainy
+    Nascar, Rainy//, Oasis, OwlPlains,
 }

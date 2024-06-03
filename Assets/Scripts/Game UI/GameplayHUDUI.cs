@@ -19,6 +19,7 @@ public class GameplayHUDUI : MonoBehaviour
     [SerializeField] private LapCounterUI _lapCounter;
     [SerializeField] private LapTimeUI _lapTime;
     [SerializeField] private TextMeshProUGUI _backwardsText;
+    [SerializeField] private TextMeshProUGUI _resetCarText;
     [SerializeField] private ResultsLayoutUI _raceResultsLayout;
     [SerializeField] private Button _menuButton;
 
@@ -51,6 +52,12 @@ public class GameplayHUDUI : MonoBehaviour
     public void HideBackwardsText() => _backwardsText.enabled = false;
 
     /*
+     * Muestra el texto para resetear el coche
+     */
+    public void ShowResetText() => _resetCarText.enabled = true;
+    public void HideResetText() => _resetCarText.enabled = false;
+
+    /*
      * Muestra el overlay de los resultados de la carrera
      */
     private void ShowRaceResults()
@@ -58,7 +65,7 @@ public class GameplayHUDUI : MonoBehaviour
         HideRaceUI();
         _timer.StopTimer();
         _raceResultsLayout.SetPositionIndicator(_positionIndicator);                                
-        _raceResultsLayout.SetLapTimes( _timer.GetTotalTime());
+        _raceResultsLayout.SetLapTimes(_timer.GetTotalTime());
 
         _raceResultsLayout.Show();
     }
@@ -105,7 +112,6 @@ public class GameplayHUDUI : MonoBehaviour
     {
         GetComponent<Canvas>().gameObject.SetActive(false);
         GameManager.Instance.Disconnect();
-        GameManager.Instance.NetworkManager.SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
-        //SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
+        SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 }

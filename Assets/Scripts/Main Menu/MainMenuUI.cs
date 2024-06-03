@@ -11,6 +11,7 @@ public class MainMenuUI : MonoBehaviour
     public string PlayerName { get; private set; } = "Anon";
     public Player.PlayerColor PlayerColor { get; private set; }
     public Circuit SelectedCircuit { get; private set; }
+    public Toggle CspToggle;
 
 
     [SerializeField] private TextMeshProUGUI _joinCodeText, _nameText, _playersLogText;
@@ -142,6 +143,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void SetPlayerReady()
     {
+        _startBtn.gameObject.SetActive(false);  
         if (GameManager.Instance.TrainingMode)
         {
             LoadTrainingMode();
@@ -174,6 +176,7 @@ public class MainMenuUI : MonoBehaviour
             _joinCodeText.gameObject.SetActive(true);
             _playersLog.SetActive(true);
             _backBtn.gameObject.SetActive(true);                                            // vuelve a activar el boton de retroceso para salir de la sala
+            CspToggle.gameObject.SetActive(true);                                           // activa el toggle para la csp
         },
         () =>
         {
@@ -219,6 +222,7 @@ public class MainMenuUI : MonoBehaviour
         SetFinalNameText();
         DisableCarButtons();
 
+        
         _circuitSelect.SetActive(false);
         GameManager.Instance.StartHost(joinCode =>                                          //callback que se ejecuta cuando termine de crearse el host
         {
@@ -293,6 +297,7 @@ public class MainMenuUI : MonoBehaviour
         _hostBtn.GetComponent<RectTransform>().position = _hostBtnOriginalPos;
         _joinBtn.gameObject.SetActive(false);
         _hostBtn.gameObject.SetActive(false);
+        CspToggle.gameObject.SetActive(false);
         _trainBtn.gameObject.SetActive(true);
         _onlineBtn.gameObject.SetActive(true);
         _nameInput.SetActive(true);

@@ -135,6 +135,18 @@ public class RaceController : NetworkBehaviour
         }
     }
 
+    public void RemovePlayer(Player player) //solo se llama en el Host
+    {
+        _players.Remove(player);
+        _sortedPlayers.Remove(player);
+
+        // Hay que rehacer la lista contando con un jugador menos
+        for (int i = 0; i < _players.Count; ++i)
+        {
+            _players[i].IndexInRaceController = i;
+        }
+    }
+
     private IEnumerator StartRaceCountdown()
     {
         yield return new WaitForSeconds(1f);
@@ -233,8 +245,6 @@ public class RaceController : NetworkBehaviour
     {
         UCVClientRpc(id, index, active);
     }
-
-    
 
     [ClientRpc(RequireOwnership = false)]
     private void UCVClientRpc(ulong id, int index, bool active)

@@ -38,8 +38,8 @@ public class ResultsLayoutUI : MonoBehaviour
     public void SetPositionIndicator(PositionIndicatorUI racerPositions)
     {
         if (GameManager.Instance.TrainingMode) return;                              // No se muestra en el modo de entrenamiento
-        
-        _raceEndPositionsText.text = racerPositions.GetPositionsList();             // Crea una copia de la lista de los jugadores pero "inmutable"
+
+        _raceEndPositionsText.text = racerPositions.GetPositionsList();  // Crea una copia de la lista de los jugadores pero "inmutable". MENTIRA SE CAMBIA IGUAL
     }
 
     /*

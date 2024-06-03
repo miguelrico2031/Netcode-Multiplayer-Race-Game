@@ -69,6 +69,18 @@ public class InputControllerCSP : NetworkBehaviour, IInputController
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        
     }
-    
+
+    public void OnReset(InputAction.CallbackContext context)
+    {
+        OnResetServerRpc();
+    }
+
+    [ServerRpc]
+    private void OnResetServerRpc()
+    {
+        if (InputEnabled)
+            _car.RepositionCar(() => { });
+    }
 }

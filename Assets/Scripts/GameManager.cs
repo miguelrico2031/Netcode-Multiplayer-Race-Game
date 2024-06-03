@@ -1,11 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Unity.Collections;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
@@ -13,7 +8,8 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
-using UnityEngine.Events;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour
 {
@@ -35,15 +31,17 @@ public class GameManager : NetworkBehaviour
     
     private NetworkManager _networkManager;
     private PlayerInfo _localPlayerInfo;
-    private MainMenuUI _mainMenuUI;
+    private MainMenuUI _mainMenuUI { get; set; }
+    //[SerializeField] private MainMenuUI _mainMenuUI;
     private readonly HashSet<ulong> _readyPlayers = new();
     private bool _disconnectedLocally = false;
 
-    
+    public Player[] playerPrefabs;
 
-    
-    
+
+
     #region Unity Callbacks
+
     private void Awake()
     {
         //singleton
@@ -73,8 +71,10 @@ public class GameManager : NetworkBehaviour
         _networkManager.OnServerStopped += OnServerStopped;
         _networkManager.OnClientStopped += OnClientStopped;
         _networkManager.ConnectionApprovalCallback += ApprovalCheck;
-        _mainMenuUI = FindObjectOfType<MainMenuUI>();
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        SceneManager.LoadScene("Main Menu");
     }
     
     private void OnDisable()
@@ -82,6 +82,13 @@ public class GameManager : NetworkBehaviour
 
     }
 
+    // Es necesario para vincular la UI con el GameManager y poder tomar el nombre del jugador en el campo de texto
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("OnSceneLoaded: " + scene.name);
+        if (scene.name == "Main Menu")
+            _mainMenuUI = FindObjectOfType<MainMenuUI>();
+    }
 
     #endregion
 
@@ -161,6 +168,10 @@ public class GameManager : NetworkBehaviour
             SelectedCircuit.Value = _mainMenuUI.SelectedCircuit;
             _networkManager.OnClientDisconnectCallback += OnClientDisconnected;
         }
+        else if (IsClient)
+        {
+            _networkManager.OnClientDisconnectCallback += OnHostDisconnected;
+        }
         
         AddPlayerInfoServerRpc(id, playerName, playerColor); //Llamada al server para actualizar la lista de PlayerInfos
 
@@ -176,6 +187,11 @@ public class GameManager : NetworkBehaviour
     
     private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
     { //evita que clientes se puedan unir si se excede el maximo de usuarios o ya empezo una partida
+        /*
+         * Esto funcionaba antes. Desde que se creó la escena de carga, la propiedad de connection approval no funciona(?.
+         * Si se activa, no se puede unir ningún cliente
+         * Si no se activa, esta línea no se ejecuta y se pierde el control planteado
+         */
         response.Approved = SceneManager.GetActiveScene().buildIndex == 0 && NumPlayers.Value < MaxConnections;
     }
     private void OnClientDisconnected(ulong id)
@@ -188,6 +204,13 @@ public class GameManager : NetworkBehaviour
             if (PlayerInfos[i].ID == id) break;
         PlayerInfos.RemoveAt(i);
         _readyPlayers.Remove(id); //borra la peticion de iniciar partida del cliente desconectado (si la hubiera)
+    }
+
+    private void OnHostDisconnected(ulong id)
+    {
+        Debug.Log("Se fue el host");
+        Disconnect();
+        SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 
     private void OnServerStopped(bool b) //se llama local en el host cuando se para el server
@@ -211,15 +234,17 @@ public class GameManager : NetworkBehaviour
     {
         _disconnectedLocally = true;
         _networkManager.Shutdown();
-        
-        if (NetworkManager.Singleton != null)
+
+        if (IsHost)
         {
-            Destroy(NetworkManager.Singleton.gameObject);
+            //foreach (var client in _networkManager.ConnectedClientsList)
+            //    _networkManager.DisconnectClient(client.ClientId);
+            GetComponent<NetworkObject>().Despawn();
         }
 
-        //Destroy(_networkManager.gameObject);
+        Destroy(_networkManager.gameObject);
+        Destroy(gameObject);
 
-        GetComponent<NetworkObject>().Despawn(true);
 
         //PlayerInfos = new();
 
@@ -253,8 +278,7 @@ public class GameManager : NetworkBehaviour
         if (TrainingMode) LoadGameScene();          // En el modo entrenamiento no se espera a nadie y comienza el juego.
 
         //si los jugadores listos para jugar son la mayoria (y hay al menos 2) empieza el juego
-        // else if (NumPlayers.Value > 1 && _readyPlayers.Count > NumPlayers.Value / 2f) 
-        else
+        else if (NumPlayers.Value > 1 && _readyPlayers.Count > NumPlayers.Value / 2f) 
             LoadGameScene();
     }
 
@@ -262,7 +286,6 @@ public class GameManager : NetworkBehaviour
 
 
     #region Game Methods
-
 
     public void SpawnPlayer() //se llama local y hace un rpc al server para spawnear el jugador
     {
@@ -278,11 +301,16 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void SpawnPlayerServerRpc(ulong id)
     {
-       
+        if (_mainMenuUI.CspToggle.isOn)
+            _playerPrefab = playerPrefabs[0];
+        else
+            _playerPrefab = playerPrefabs[1];
+
         LocalPlayer = Instantiate(_playerPrefab);
         LocalPlayer.ID = id;
         LocalPlayer.StartOrder = tempOrder++;
         LocalPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(id);
     }
+
     #endregion
 }

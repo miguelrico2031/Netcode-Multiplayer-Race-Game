@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Clase que gestiona la lista del orden de los jugadores en el HUD durante la carrera.
@@ -26,7 +27,8 @@ public class PositionIndicatorUI : MonoBehaviour
     {
         if (GameManager.Instance.TrainingMode) return;                           // No se muestra en el modo de entrenamiento, así que no se actualiza
 
-        GetPositionsList();
+        
+        _positionIndicatorText.text = GetPositionsList();
         //UpdatePlayerPositionList();
     }
 
@@ -41,14 +43,15 @@ public class PositionIndicatorUI : MonoBehaviour
     public string GetPositionsList()
     {
         _positionIndicatorText.text = "";                                       // La vacía para actualizarla en el update
+        var positions = "";
         var st = GameManager.Instance.RaceController.PlayerOrder.Value.Value;   // Toma la lista de los jugadores ordenados desde el RaceController 
         var stsplit = st.Split(";");
         foreach (var p in stsplit)
         {
             if (p == "") continue;
-            _positionIndicatorText.text += $"{p}\n";                            // Muestra cada jugador como una línea separada
+            positions += $"{p}\n";                                              // Muestra cada jugador como una línea separada
         }
 
-        return _positionIndicatorText.text;
+        return positions;
     }
 }
